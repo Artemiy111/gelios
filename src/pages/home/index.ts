@@ -1,1 +1,1 @@
-export { default as HomePage } from './ui/index.vue'
+export { default as HomePage } from './index.vue'

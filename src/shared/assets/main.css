@@ -15,6 +15,9 @@
     --color-black: oklch(0 0 0);
     --color-black-3p:  oklch(0 0 0 / 3%);
     --color-black-10p:  oklch(0 0 0 / 10%);
+    --color-black-60p:  oklch(0 0 0 / 60%);
+    --color-black-80p:  oklch(0 0 0 / 80%);
+
     --color-accent: oklch(0.72 0.21 52.14);
     --color-error: oklch(0.61 0.27 27.92);
 
@@ -47,17 +50,32 @@
 
   .text-heading {
     font-size: var(--text-heading);
+    font-weight: bold;
     line-height: 0.95;
   }
 
   .text-subheading {
     font-size: var(--text-subheading);
+    font-weight: bold;
     line-height: 1.15;
   }
 
   .text-base {
     font-size: var(--text-base);
     line-height: 1.5;
+  }
+
+  .text-small {
+    font-size: var(--text-small);
+    line-height: 1.5;
+  }
+
+  .text-bold {
+    font-weight: bold;
+  }
+
+  .text-normal {
+    font-weight: normal;
   }
 
   button {
@@ -70,5 +88,16 @@
     line-height: 1.5;
     background: transparent;
     border: none;
+  }
+
+  a {
+    cursor: pointer;
+    color: var(--color-text-base);
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:is(:hover, :active) {
+      color: var(--color-text-accent);
+    }
   }
 }
