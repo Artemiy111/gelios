@@ -1,0 +1,74 @@
+@layer reset, base;
+
+@import 'modern-normalize/modern-normalize.css' layer(reset); 
+
+@layer reset {
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+  } 
+}
+
+@layer base {
+  :root {
+    --color-white: oklch(1 0 0);
+    --color-black: oklch(0 0 0);
+    --color-black-3p:  oklch(0 0 0 / 3%);
+    --color-black-10p:  oklch(0 0 0 / 10%);
+    --color-accent: oklch(0.72 0.21 52.14);
+    --color-error: oklch(0.61 0.27 27.92);
+
+    --color-text-base: oklch(0 0 0);
+    --color-text-accent: var(--color-accent);
+    --color-text-error: var(--color-error);
+
+    --text-heading: 4.8rem;
+    --text-subheading: 3.6rem;
+    --text-base: 2.4rem;
+    --text-small: 2.2rem;
+
+    --container-pad: 6rem;
+    --container-width: calc(100% - 2 * var(--container-pad));
+
+    --header-height: 8rem;
+  }
+
+  html {
+    font-size: 10px;
+  }
+  
+  body {
+    font-family: 'Carlito', sans-serif;
+    font-size: var(--text-base);
+    line-height: 1.5;
+    background: var(--color-blo);
+
+  }
+
+  .text-heading {
+    font-size: var(--text-heading);
+    line-height: 0.95;
+  }
+
+  .text-subheading {
+    font-size: var(--text-subheading);
+    line-height: 1.15;
+  }
+
+  .text-base {
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  button {
+    cursor: pointer;
+    
+    width: max-content;
+    height: max-content;
+
+    font-size: var(--text-small);
+    line-height: 1.5;
+    background: transparent;
+    border: none;
+  }
+}
