@@ -120,13 +120,15 @@ const mission = [
       </div>
       <div class="info">
         <table>
-          <tr
-            v-for="row in info"
-            :key="row.header"
-          >
-            <th>{{ row.header }}</th>
-            <td>{{ row.data }}</td>
-          </tr>
+          <tbody>
+            <tr
+              v-for="row in info"
+              :key="row.header"
+            >
+              <th>{{ row.header }}</th>
+              <td>{{ row.data }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </section>
@@ -136,14 +138,16 @@ const mission = [
         Сохранять ваше настоящее, чтобы вы уверенно создавали свое будущее
       </h3>
       <table class="mission-items">
-        <tr
-          v-for="item in mission"
-          :key="item.title"
-          class="mission-item"
-        >
-          <th>{{ item.title }}</th>
-          <td>{{ item.text }}</td>
-        </tr>
+        <tbody>
+          <tr
+            v-for="item in mission"
+            :key="item.title"
+            class="mission-item"
+          >
+            <th>{{ item.title }}</th>
+            <td>{{ item.text }}</td>
+          </tr>
+        </tbody>
       </table>
     </section>
   </div>
@@ -210,16 +214,20 @@ const mission = [
   align-items: flex-end;
 }
 
+.map img {
+  width: 91rem;
+}
+
 .info {
-  & table {
+  & tbody {
     display: grid;
     grid-template-columns: max-content 1fr;
     column-gap: 2.5rem;
   }
 
   & tr {
-    grid-column: 1 / -1;
     display: grid;
+    grid-column: 1 / -1;
     grid-template-columns: subgrid;
 
     & + tr {
@@ -242,14 +250,13 @@ const mission = [
   margin-block-end: 4.5rem;
 }
 
-.mission-items {
+.mission-items tbody {
   display: grid;
   grid-template-columns: 35rem 1fr;
   gap: 3.5rem 6rem;
 
   width: 100%;
   margin-block-start: 4.5rem;
-
 }
 
 .mission-item {

@@ -23,10 +23,4 @@ export default defineNuxtConfig({
       stylistic: true,
     },
   },
-
-  fonts: {
-    families: [{
-      name: 'Montserrat',
-    }],
-  },
 })

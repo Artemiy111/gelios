@@ -16,6 +16,7 @@
   "dependencies": {
     "@nuxt/eslint": "^0.6.0",
     "@nuxt/fonts": "^0.10.1",
+    "@vueuse/core": "^11.1.0",
     "lucide-vue-next": "^0.453.0",
     "modern-normalize": "^3.0.1",
     "nuxt": "^3.13.2",

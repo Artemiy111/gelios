@@ -16,12 +16,15 @@ defineOptions({
           class="icon-pad-start"
           type="button"
         >
-          <Menu />
+          <Menu class="icon" />
         </button>
         <span class="logo">ГЕЛИОС</span>
         <span class="text-pad-start">Москва</span>
-        <button type="button">
-          <Search class="search icon-pad-start" />
+        <button
+          class="icon-pad-start"
+          type="button"
+        >
+          <Search class="icon " />
         </button>
       </div>
       <div class="header-right">
@@ -65,6 +68,11 @@ defineOptions({
   font-family: 'Dela Gothic One', sans-serif;
 }
 
+.icon {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
 .icon-pad-start {
   margin-block-start: 2.8rem;
 }
@@ -74,6 +82,6 @@ defineOptions({
 }
 
 .button-pad-start {
-  margin-block-start: 14px;
+  margin-block-start: 1.4rem;
 }
 </style>

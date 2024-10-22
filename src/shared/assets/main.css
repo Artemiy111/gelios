@@ -9,6 +9,12 @@
   } 
 }
 
+/* @property --rem {
+  inherits: true;
+  initial-value: 10px;
+  syntax: '<length>';
+} */
+
 @layer base {
   :root {
     --color-white: oklch(1 0 0);
@@ -35,9 +41,15 @@
 
     --header-height: 8rem;
   }
-
+  
   html {
-    font-size: 10px;
+    --_max-w: 1920;
+    --_min-w: 1024;
+    --_max-rem: 10px;
+    --_min-rem: calc((var(--_max-rem)) * (var(--_min-w) / var(--_max-w)));
+    --rem: clamp(var(--_min-rem), 100vw / var(--_max-w) * 10, var(--_max-rem));
+    
+    font-size: var(--rem);
   }
   
   body {
