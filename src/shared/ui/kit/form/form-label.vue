@@ -13,6 +13,6 @@ const props = defineProps<{
 
 <style scoped>
 .form-label {
-  color: var(--color-black-60p);
+  color: var(--color-text-secondary);
 }
 </style>

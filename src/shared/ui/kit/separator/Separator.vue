@@ -6,6 +6,6 @@
 .separator {
   width: 100%;
   height: 1px;
-  background: var(--color-black-10p);
+  background: var(--color-separator);
 }
 </style>

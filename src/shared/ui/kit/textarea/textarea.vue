@@ -9,7 +9,7 @@ textarea {
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
 
-  background: var(--color-black-3p);
+  background: var(--color-foreground);
   border: none;
 }
 </style>

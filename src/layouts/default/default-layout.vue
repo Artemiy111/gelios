@@ -5,13 +5,9 @@ import '~~/src/shared/assets/main.css'
 import { Header } from '~~/src/widgets/header'
 import { Footer } from '~~/src/widgets/footer'
 
-defineOptions({
-  name: 'DefaultLayout',
-})
-
-onMounted(() => {
-  console.log(getComputedStyle(document.documentElement).getPropertyValue('--_rem'))
-})
+// onMounted(() => {
+//   console.log(getComputedStyle(document.documentElement).getPropertyValue('--_rem'))
+// })
 
 // const useRem = () => {
 //   const { width } = useWindowSize()
@@ -60,6 +56,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: max-content 1fr auto;
+  background: var(--color-background);
 }
 
 main {

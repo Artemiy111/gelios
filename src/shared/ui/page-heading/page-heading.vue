@@ -59,7 +59,7 @@ const props = defineProps<{
 
 .crumb,
 .crumb a {
-  color: var(--color-black-60p);
+  color: var(--color-text-secondary);
 }
 
 .crumb a:is(:hover, :active) {

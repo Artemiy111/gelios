@@ -27,16 +27,16 @@ button {
   height: fit-content;
   padding: 1rem 2.2rem;
 
-  color: var(--is-primary, var(--color-white)) var(--is-secondary, var(--color-text));
+  color: var(--is-primary, var(--color-background)) var(--is-secondary, var(--color-text-base));
 
-  background: var(--is-primary, var(--color-black)) var(--is-secondary, var(--color-black-3p));
+  background: var(--is-primary, var(--color-text-base)) var(--is-secondary, var(--color-foreground));
   border: none;
 
   transition: color 0.3s, background 0.3s;
 
   &:hover {
-    color: var(--is-primary, var(--color-white)) var(--is-secondary, var(--color-white));
-    background: var(--is-primary, var(--color-accent)) var(--is-secondary, var(--color-black));
+    color: var(--is-primary, var(--color-text-base)) var(--is-secondary, var(--color-background));
+    background: var(--is-primary, var(--color-accent)) var(--is-secondary, var(--color-text-base));
   }
 }
 </style>

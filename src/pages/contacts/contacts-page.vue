@@ -153,12 +153,12 @@ const phone: TableRow[] = [
 
     &:not(:last-child) {
       padding-block-end: 1.7rem;
-      border-block-end: 1px solid var(--color-black-10p);
+      border-block-end: 1px solid var(--color-separator);
     }
   }
 
   & th {
-    color: var(--color-black-60p);
+    color: var(--color-text-secondary);
   }
 }
 

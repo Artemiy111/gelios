@@ -173,7 +173,7 @@ const currentTab = ref(tabs[0]!)
   align-self: flex-end;
   font-size: var(--font-small);
   line-height: 1.2;
-  color: var(--color-black-60p);
+  color: var(--color-text-secondary);
 }
 
 .form-actions {
@@ -190,7 +190,7 @@ const currentTab = ref(tabs[0]!)
   column-gap: 2rem;
 
   & span {
-    color: var(--color-black-60p);
+    color: var(--color-text-secondary);
   }
 }
 </style>

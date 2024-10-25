@@ -53,7 +53,7 @@ import { FormFields, FormField, FieldError, FormLabel } from '~~/src/shared/ui/k
   column-gap: 2rem;
 
   & span {
-    color: var(--color-black-60p);
+    color: var(--color-text-secondary);
   }
 }
 </style>

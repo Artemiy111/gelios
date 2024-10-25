@@ -19,15 +19,20 @@
   :root {
     --color-white: oklch(1 0 0);
     --color-black: oklch(0 0 0);
-    --color-black-3p:  oklch(0 0 0 / 3%);
-    --color-black-10p:  oklch(0 0 0 / 10%);
-    --color-black-60p:  oklch(0 0 0 / 60%);
-    --color-black-80p:  oklch(0 0 0 / 80%);
-
+    --color-black-3p: oklch(0 0 0 / 3%);
+    --color-black-10p: oklch(0 0 0 / 10%);
+    --color-black-60p: oklch(0 0 0 / 60%);
+    
     --color-accent: oklch(0.72 0.21 52.14);
     --color-error: oklch(0.61 0.27 27.92);
 
-    --color-text-base: oklch(0 0 0);
+    --color-background: light-dark(var(--color-white), oklch(from var(--color-black) calc(l + 0.1) c h)); 
+    --color-foreground: light-dark(var(--color-black-3p), oklch(0.2 0 0));
+    --color-backdrop: light-dark(var(--color-black-10p), oklch(1 0 0 / 0.1));
+    --color-separator: light-dark(var(--color-black-10p), oklch(0.25 0 0));
+
+    --color-text-base: light-dark(var(--color-black), var(--color-white));
+    --color-text-secondary: light-dark(var(--color-black-60p), oklch(0.8 0 0));
     --color-text-accent: var(--color-accent);
     --color-text-error: var(--color-error);
 
@@ -40,10 +45,13 @@
     --text-small: 2.2rem;
     --text-small-line-height: 1.5;
 
+    --transition-duration: 0.3s;
+
     --container-pad: 6rem;
     --container-width: calc(100% - 2 * var(--container-pad));
 
     --header-height: 8rem;
+    --header-z-index: 100;
   }
   
   html {
@@ -52,15 +60,18 @@
     --_max-rem: 10px;
     --_min-rem: calc((var(--_max-rem)) * (var(--_min-w) / var(--_max-w)));
     --rem: clamp(var(--_min-rem), 100vw / var(--_max-w) * 10, var(--_max-rem));
-    
+
     font-size: var(--rem);
+    color-scheme: light dark;
   }
   
   body {
     font-family: 'Carlito', sans-serif;
     font-size: var(--text-base);
     line-height: var(--text-base-line-height);
-    background: var(--color-blo);
+    color: var(--color-text-base);
+
+    background: var(--color-background);
   }
 
   .text-heading {
@@ -99,8 +110,7 @@
     width: max-content;
     height: max-content;
 
-    font-size: var(--text-small);
-    line-height: 1.5;
+    line-height: var(--text-base-line-height);
 
     background: transparent;
     border: none;

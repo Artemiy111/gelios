@@ -67,7 +67,7 @@ const links = [
 
 .mini-link {
   margin-block-start: 1.5rem;
-  color: var(--color-black-80p);
+  color: var(--color-text-secondary);
 
   &:is(:hover, :active) {
     color: var(--color-text-accent);
@@ -77,6 +77,6 @@ const links = [
 .copyright {
   margin-block-start: 2.5rem;
   margin-block-end: 4.5rem;
-  color: var(--color-black-60p)
+  color: var(--color-text-secondary)
 }
 </style>

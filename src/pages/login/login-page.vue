@@ -80,7 +80,7 @@ const currentTab = ref(tabs[0]!)
   column-gap: 2rem;
 
   & span {
-    color: var(--color-black-60p);
+    color: var(--color-text-secondary);
   }
 }
 </style>
