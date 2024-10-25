@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
+  to: string
   variant?: 'primary' | 'secondary'
 }>(), {
   variant: 'primary',
@@ -7,23 +8,23 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-  <!-- eslint-disable vue/html-button-has-type -->
-  <button
-    class="text-small"
+  <NuxtLink
+    class="text-small button-link"
     :style="{
       '--is-primary': props.variant === 'primary' ? 'initial' : ' ',
       '--is-secondary': props.variant === 'secondary' ? 'initial' : ' ',
     }"
+    :to="props.to"
   >
     <slot />
-  </button>
+  </NuxtLink>
 </template>
 
 <style scoped>
-button {
+.button-link {
   --is-primary: initial;
   --is-secondary: ;
-
+  display: block;
   height: fit-content;
   padding: 1rem 2.2rem;
 

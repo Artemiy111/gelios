@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { Menu, Search } from 'lucide-vue-next'
 import { Separator } from '~~/src/shared/ui/kit/separator'
-import { Button } from '~~/src/shared/ui/kit/button'
-
-defineOptions({
-  name: 'Header',
-})
+import { ButtonLink } from '~~/src/shared/ui/kit/button-link'
 </script>
 
 <template>
@@ -18,7 +14,12 @@ defineOptions({
         >
           <Menu class="icon" />
         </button>
-        <span class="logo">ГЕЛИОС</span>
+        <NuxtLink
+          class="logo"
+          to="/"
+        >
+          ГЕЛИОС
+        </NuxtLink>
         <span class="text-pad-start">Москва</span>
         <button
           class="icon-pad-start"
@@ -31,12 +32,13 @@ defineOptions({
         <NuxtLink class="text-pad-start">
           8 800 1 007 007
         </NuxtLink>
-        <Button
+        <ButtonLink
           class="button-pad-start"
+          to="/login"
           variant="secondary"
         >
-          Авторизация
-        </Button>
+          Вход
+        </ButtonLink>
       </div>
     </div>
     <Separator />

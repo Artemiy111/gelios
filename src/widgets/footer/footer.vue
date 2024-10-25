@@ -45,10 +45,10 @@ const links = [{
 
 <style scoped>
 .footer-inner {
-  width: var(--container-width);
-  margin-inline: auto;
   display: flex;
   flex-direction: column;
+  width: var(--container-width);
+  margin-inline: auto;
 }
 
 .links {

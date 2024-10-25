@@ -32,9 +32,13 @@
     --color-text-error: var(--color-error);
 
     --text-heading: 4.8rem;
+    --text-heading-line-height: 0.95;
     --text-subheading: 3.6rem;
+    --text-subheading-line-height: 1.15; 
     --text-base: 2.4rem;
+    --text-base-line-height: 1.5;
     --text-small: 2.2rem;
+    --text-small-line-height: 1.5;
 
     --container-pad: 6rem;
     --container-width: calc(100% - 2 * var(--container-pad));
@@ -55,15 +59,14 @@
   body {
     font-family: 'Carlito', sans-serif;
     font-size: var(--text-base);
-    line-height: 1.5;
+    line-height: var(--text-base-line-height);
     background: var(--color-blo);
-
   }
 
   .text-heading {
     font-size: var(--text-heading);
     font-weight: bold;
-    line-height: 0.95;
+    line-height: var(--text-heading-line-height);
   }
 
   .text-subheading {
@@ -74,12 +77,12 @@
 
   .text-base {
     font-size: var(--text-base);
-    line-height: 1.5;
+    line-height: var(--text-base-line-height)
   }
 
   .text-small {
     font-size: var(--text-small);
-    line-height: 1.5;
+    line-height: var(--text-small-line-height);
   }
 
   .text-bold {
@@ -98,6 +101,7 @@
 
     font-size: var(--text-small);
     line-height: 1.5;
+
     background: transparent;
     border: none;
   }
@@ -111,5 +115,9 @@
     &:is(:hover, :active) {
       color: var(--color-text-accent);
     }
+  }
+
+  th {
+    text-align: left;
   }
 }

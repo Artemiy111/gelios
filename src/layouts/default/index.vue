@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import '~~/src/shared/assets/main.css'
-import { useEventListener, useWindowSize, watchImmediate } from '@vueuse/core'
+// import { useEventListener, useWindowSize, watchImmediate } from '@vueuse/core'
 
 import { Header } from '~~/src/widgets/header'
 import { Footer } from '~~/src/widgets/footer'

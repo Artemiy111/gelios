@@ -1,7 +1,5 @@
 <script setup lang="ts">
-defineOptions({
-  name: 'HomePage',
-})
+import { PageHeading } from '~~/src/shared/ui/page-heading'
 
 const mockBreadcrumbs = [
   {
@@ -67,27 +65,10 @@ const mission = [
 
 <template>
   <div class="">
-    <section class="heading">
-      <div class="breadcrumbs">
-        <div
-          v-for="(crumb, idx) in breadcrumbs"
-          :key="crumb.name"
-          class="crumb text-small"
-        >
-          <NuxtLink
-            v-if="crumb.url"
-            :to="crumb.url"
-          >
-            {{ crumb.name }}
-          </NuxtLink>
-          <span v-else>{{ crumb.name }}</span>
-          <span v-if="idx !== breadcrumbs.length - 1"> · </span>
-        </div>
-      </div>
-      <h1 class="text-heading">
-        Компания
-      </h1>
-    </section>
+    <PageHeading
+      :breadcrumbs="breadcrumbs"
+      title="Компания"
+    />
 
     <section class="content">
       <h2 class="text-subheading">
@@ -154,34 +135,6 @@ const mission = [
 </template>
 
 <style scoped>
-.heading {
-  font-size: var(--text-heading);
-  line-height: 0.95;
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
-  &:has(.breadcrumbs) {
-    margin-block-start: 2.5rem;
-  }
-
-  &:not(:has(.breadcrumbs)) {
-    margin-block-start: 6.8rem;
-  }
-}
-
-.breadcrumbs {
-  display: flex;
-  column-gap: 0.5rem;
-}
-
-.crumb, .crumb a {
-  color: var(--color-black-60p);
-}
-
-.crumb a:is(:hover, :active) {
-  color: var(--color-text-accent);
-}
-
 .content {
   margin-block-start: 4.5rem;
 
