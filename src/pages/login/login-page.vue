@@ -37,9 +37,9 @@ const currentTab = ref(tabs[0]!)
           <FormLabel text="Пароль" />
           <Input
             id="password"
-            type="text"
+            type="password"
           />
-          <FieldError error="Обязательное поле" />
+          <FieldError />
         </FormField>
       </FormFields>
 

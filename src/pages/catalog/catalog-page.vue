@@ -1,71 +1,39 @@
 <script setup lang="ts">
 import { PageHeading } from '~~/src/shared/ui/page-heading'
 import type { BreadCrumb } from '~~/src/shared/ui/page-heading/types'
-import Image1 from './assets/image-1.png'
-import Image2 from './assets/image-2.png'
-import Image3 from './assets/image-3.png'
-import Image4 from './assets/image-4.png'
-import Image5 from './assets/image-5.png'
-import Image6 from './assets/image-6.png'
+import { catalog } from './config'
+import { Input } from '~~/src/shared/ui/kit/input'
+
+const props = defineProps<{
+  search?: string
+}>()
 
 const breadcrumbs: BreadCrumb[] = [
   { name: 'Главная', url: '/' },
   { name: 'Каталог' },
 ]
 
-type CatalogSection = {
-  title: string
-  items: CatalogItem[]
-}
+watch(() => props.search, () => {
+  filter.value = props.search ?? ''
+})
 
-type CatalogItem = {
-  title: string
-  description: string
-  image: string
-}
+const filter = ref(props.search ?? '')
 
-const catalog: CatalogSection[] = [
-  {
-    title: 'Имущество',
-    items: [
-      {
-        title: 'Ипотека',
-        description: 'Комплексная защита при покупке недвижимости в ипотеку',
-        image: Image1,
-      },
-      {
-        title: 'Квартира и дом',
-        description: 'Защита от пожара, затопления, кражи и повреждения имущества',
-        image: Image2,
-      },
-    ],
-  },
-  {
-    title: 'Здоровье',
-    items: [
-      {
-        title: 'Страхование спортсменов',
-        description: 'Финансовая защита при получении травмы на тренировке или соревнованиях',
-        image: Image3,
-      },
-      {
-        title: 'Страхование от несчастных случаев',
-        description: 'Оформите страховку онлайн, не выходя из дома',
-        image: Image4,
-      },
-      {
-        title: 'Доктор на связи',
-        description: 'Поговорите с врачом, не выходя из дома',
-        image: Image5,
-      },
-      {
-        title: 'Путешествия',
-        description: 'Путешествуй без забот. По России и по всему миру',
-        image: Image6,
-      },
-    ],
-  },
-]
+const filteredCatalog = computed(() => {
+  const mappedSections = catalog.map((section) => {
+    const filteredItems = section.items.filter(item =>
+      item.title.toLowerCase().includes(filter.value.toLowerCase()),
+    )
+    return {
+      ...section,
+      items: filteredItems,
+    }
+  })
+
+  return mappedSections.filter(section =>
+    section.items.length > 0,
+  )
+})
 </script>
 
 <template>
@@ -74,9 +42,16 @@ const catalog: CatalogSection[] = [
     title="Каталог"
   />
 
+  <Input
+    v-model="filter"
+    class="search"
+    placeholder="Поиск"
+    type="text"
+  />
+
   <section class="catalog">
     <section
-      v-for="(section, sectionIdx) in catalog"
+      v-for="(section, sectionIdx) in filteredCatalog"
       :key="section.title"
       class="catalog-section"
     >
@@ -105,6 +80,9 @@ const catalog: CatalogSection[] = [
 </template>
 
 <style scoped>
+.search {
+  margin-block-start: 3.5rem;
+}
 .catalog {
   display: flex;
   flex-direction: column;

@@ -78,7 +78,7 @@ const currentTab = ref(tabs[0]!)
             <FormLabel text="Серия и номер документа" />
             <Input
               id="password"
-              type="date"
+              type="text"
             />
             <FieldError />
           </FormField>
@@ -88,7 +88,7 @@ const currentTab = ref(tabs[0]!)
             <FormLabel text="Дата выдачи" />
             <Input
               id="password"
-              type="text"
+              type="date"
             />
             <FieldError />
           </FormField>

@@ -1,19 +1,27 @@
 <script setup lang="ts">
 import Separator from '~~/src/shared/ui/kit/separator/Separator.vue'
 
-const links = [{
-  name: 'Реквизиты',
-  url: '/',
-}, {
-  name: 'Документы',
-  url: '/',
-}, {
-  name: 'Пользовательское соглашение',
-  url: '/',
-}, {
-  name: 'Карта сайта',
-  url: '/',
-}]
+const links = [
+  {
+    name: 'Реквизиты',
+    url: '/',
+  },
+  {
+    name: 'Документы',
+    url: '/',
+  },
+  {
+    name: 'Пользовательское соглашение',
+    url: '/',
+  }, {
+
+    name: 'Карта сайта',
+    url: '/',
+  },
+  {
+    name: 'Обратная связь',
+    url: '/feedback',
+  }]
 </script>
 
 <template>
