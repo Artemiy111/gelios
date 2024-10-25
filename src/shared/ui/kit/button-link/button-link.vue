@@ -24,7 +24,9 @@ const props = withDefaults(defineProps<{
 .button-link {
   --is-primary: initial;
   --is-secondary: ;
+
   display: block;
+
   height: fit-content;
   padding: 1rem 2.2rem;
 

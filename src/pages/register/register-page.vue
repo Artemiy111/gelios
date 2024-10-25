@@ -170,18 +170,19 @@ const currentTab = ref(tabs[0]!)
 }
 
 .form-field-email-hint {
-  font-size: var(--font-small);
-  color: var(--color-black-60p);
-  line-height: 1.2;
   align-self: flex-end;
+  font-size: var(--font-small);
+  line-height: 1.2;
+  color: var(--color-black-60p);
 }
 
 .form-actions {
+  display: flex;
+  column-gap: 5rem;
+  align-items: center;
+
   margin-block-start: 5rem;
   margin-block-end: 5rem;
-  display: flex;
-  align-items: center;
-  column-gap: 5rem;
 }
 
 .form-redirect {

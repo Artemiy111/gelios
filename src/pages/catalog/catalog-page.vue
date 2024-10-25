@@ -87,6 +87,7 @@ const filteredCatalog = computed(() => {
   display: flex;
   flex-direction: column;
   row-gap: 3.5rem;
+
   margin-block-start: 3.5rem;
   margin-block-end: 5rem;
 }

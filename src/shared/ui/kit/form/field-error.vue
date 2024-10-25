@@ -15,9 +15,11 @@ const props = defineProps<{
 .form-error {
   position: absolute;
   bottom: -3.5rem;
+
   color: var(--color-error);
 
   opacity: 0;
+
   transition: opacity 0.3s;
 }
 

@@ -118,7 +118,10 @@ const closeBurger = () => burgerMenuRef.value.close()
           :key="link.name"
         >
           <li>
-            <NuxtLink :to="link.url">
+            <NuxtLink
+              :to="link.url"
+              @click="closeBurger"
+            >
               {{ link.name }}
             </NuxtLink>
           </li>
@@ -160,7 +163,6 @@ const closeBurger = () => burgerMenuRef.value.close()
 .icon {
   width: 2.4rem;
   height: 2.4rem;
-
   transition: color 0.3s;
   &:hover {
     color: var(--color-accent);
@@ -187,15 +189,18 @@ const closeBurger = () => burgerMenuRef.value.close()
 
 .search-menu {
   position: fixed;
+  /* bottom: 0; */
+  top: calc(var(--header-height) + 4rem);
+  inset-inline: var(--container-pad);
+
   display: grid;
   grid-template-columns: 1fr max-content;
   column-gap: 3rem;
-  /* bottom: 0; */
-  top: calc(var(--header-height) + 4rem);
+
+  width: var(--container-width);
   /* width: 100%; */
   padding: var(--container-pad);
-  width: var(--container-width);
-  inset-inline: var(--container-pad);
+
   background: var(--color-white);
 
   & button {
@@ -213,11 +218,13 @@ const closeBurger = () => burgerMenuRef.value.close()
   position: fixed;
   left: 0;
   inset-block: 0;
-  height: 100%;
+
   width: 30rem;
-  background: var(--color-white);
+  height: 100%;
   padding-block: 2rem 3rem;
   padding-inline: 3rem;
+
+  background: var(--color-white);
 
   & ul {
     display: flex;

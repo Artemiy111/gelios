@@ -40,11 +40,12 @@ import { FormFields, FormField, FieldError, FormLabel } from '~~/src/shared/ui/k
 }
 
 .form-actions {
+  display: flex;
+  column-gap: 5rem;
+  align-items: center;
+
   margin-block-start: 5rem;
   margin-block-end: 5rem;
-  display: flex;
-  align-items: center;
-  column-gap: 5rem;
 }
 
 .form-redirect {

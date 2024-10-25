@@ -8,8 +8,9 @@ const model = defineModel<string>()
 
 <style scoped>
 input {
-  padding: 1rem 2.2rem;
   width: 100%;
+  padding: 1rem 2.2rem;
+
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
 

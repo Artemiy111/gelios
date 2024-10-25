@@ -22,6 +22,7 @@ const props = defineProps<{
 <style scoped>
 .form-field {
   position: relative;
+
   display: flex;
   flex-direction: column;
   row-gap: 1rem;
