@@ -4,9 +4,33 @@ import { Button } from '~~/src/shared/ui/kit/button'
 import { Input } from '~~/src/shared/ui/kit/input'
 import { FormFields, FormField, FieldError, FormLabel } from '~~/src/shared/ui/kit/form'
 import { Tabs } from '~~/src/shared/ui/tabs'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { documentTypesWithName as documentTypesWithNames, registerSchema } from '~~/src/shared/config/validation'
+import { Select } from '~~/src/shared/ui/kit/select'
+import { options } from '#build/eslint.config.mjs'
 
 const tabs = ['Физлицо', 'Ип', 'Юр лицо']
 const currentTab = ref(tabs[0]!)
+
+const { errors, meta, handleSubmit, defineField } = useForm({ validationSchema: toTypedSchema(registerSchema) })
+
+const onSubmit = handleSubmit((values) => {
+  console.log(values)
+})
+
+const [firstName, firstNameAttrs] = defineField('firstName', { validateOnModelUpdate: false })
+const [lastName, lastNameAttrs] = defineField('lastName', { validateOnModelUpdate: false })
+const [middleName, middleNameAttrs] = defineField('middleName', { validateOnModelUpdate: false })
+const [dateOfBirth, dateOfBirthAttrs] = defineField('dateOfBirth', { validateOnModelUpdate: false })
+const [documentType, documentTypeAttrs] = defineField('documentType', { validateOnModelUpdate: false })
+const [seriesAndNumber, seriesAndNumberAttrs] = defineField('seriesAndNumber', { validateOnModelUpdate: false })
+const [issuedDate, issuedDateAttrs] = defineField('issuedDate', { validateOnModelUpdate: false })
+const [issuedBy, issuedByAttrs] = defineField('issuedBy', { validateOnModelUpdate: false })
+const [phone, phoneAttrs] = defineField('phone', { validateOnModelUpdate: false })
+const [email, emailAttrs] = defineField('email', { validateOnModelUpdate: false })
+const [password, passwordAttrs] = defineField('password', { validateOnModelUpdate: false })
+const [confirmPassword, confirmPasswordAttrs] = defineField('confirmPassword', { validateOnModelUpdate: false })
 </script>
 
 <template>
@@ -16,121 +40,178 @@ const currentTab = ref(tabs[0]!)
     :tabs="tabs"
   />
   <section class="form-section">
-    <form>
+    <form @submit.prevent="onSubmit">
       <fieldset class="form-fieldset">
         <legend class="text-subheading text-normal">
           Страхователь
         </legend>
         <FormFields>
           <FormField
-            for="login"
+            for="firstName"
           >
             <FormLabel text="Фамилия" />
             <Input
-              id="login"
+              id="lastName"
+              v-model="lastName"
+              v-bind="lastNameAttrs"
+              name="lastName"
               type="text"
             />
-            <FieldError />
+            <FieldError :error="errors.lastName" />
           </FormField>
           <FormField
-            for="password"
+            for="firstName"
           >
             <FormLabel text="Имя" />
             <Input
-              id="password"
+              id="firstName"
+              v-model="firstName"
+              v-bind="firstNameAttrs"
+              name="firstName"
               type="text"
             />
-            <FieldError />
+            <FieldError :error="errors.firstName" />
           </FormField>
           <FormField
-            for="password"
+            for="middleName"
           >
             <FormLabel text="Отчество" />
             <Input
-              id="password"
+              id="middleName"
+              v-model="middleName"
+              name="middleName"
+              v-bind="middleNameAttrs"
               type="text"
             />
-            <FieldError />
+            <FieldError :error="errors.middleName" />
           </FormField>
           <FormField
-            for="password"
+            for="dateOfBirth"
           >
             <FormLabel text="Дата рождения" />
             <Input
-              id="password"
+              id="dateOfBirth"
+              v-model="dateOfBirth"
+              name="dateOfBirth"
+              v-bind="dateOfBirthAttrs"
               type="date"
             />
-            <FieldError />
+            <FieldError :error="errors.dateOfBirth" />
           </FormField>
           <FormField
-            for="password"
+            for="documentType"
           >
             <FormLabel text="Тип документа" />
-            <Input
-              id="password"
+            <!-- <Input
+              id="documentType"
+              v-model="documentType"
+              name="documentType"
+              v-bind="documentTypeAttrs"
               type="text"
-            />
-            <FieldError />
+            /> -->
+            <Select :options="documentTypesWithNames" />
+            <FieldError :error="errors.documentType" />
           </FormField>
           <FormField
-            for="password"
+            for="seriesAndNumber"
           >
             <FormLabel text="Серия и номер документа" />
             <Input
-              id="password"
+              id="seriesAndNumber"
+              v-model="seriesAndNumber"
+              name="seriesAndNumber"
+              v-bind="seriesAndNumberAttrs"
               type="text"
             />
-            <FieldError />
+            <FieldError :error="errors.seriesAndNumber" />
           </FormField>
           <FormField
-            for="password"
+            for="issuedDate"
           >
             <FormLabel text="Дата выдачи" />
             <Input
-              id="password"
+              id="issuedDate"
+              v-model="issuedDate"
+              name="issuedDate"
+              v-bind="issuedDateAttrs"
               type="date"
             />
-            <FieldError />
+            <FieldError :error="errors.issuedDate" />
           </FormField>
           <FormField
-            for="password"
+            for="issuedBy"
           >
             <FormLabel text="Кем выдан" />
             <Input
-              id="password"
+              id="issuedBy"
+              v-model="issuedBy"
+              name="issuedBy"
+              v-bind="issuedByAttrs"
               type="text"
             />
-            <FieldError />
+            <FieldError :error="errors.issuedBy" />
           </FormField>
           <FormField
-            for="password"
+            for="phone"
           >
             <FormLabel text="Телефон" />
             <Input
-              id="password"
+              id="phone"
+              v-model="phone"
+              name="phone"
+              v-bind="phoneAttrs"
               type="tel"
             />
-            <FieldError />
+            <FieldError :error="errors.phone" />
+          </FormField>
+          <FormField
+            for="email"
+          >
+            <FormLabel text="Email" />
+            <Input
+              id="email"
+              v-model="email"
+              name="email"
+              v-bind="emailAttrs"
+              type="email"
+            />
+            <FieldError :error="errors.email" />
           </FormField>
           <FormField
             for="password"
           >
-            <FormLabel text="Email" />
+            <FormLabel text="Пароль" />
             <Input
               id="password"
-              type="email"
+              v-model="password"
+              name="password"
+              v-bind="passwordAttrs"
+              type="password"
             />
-            <FieldError />
+            <FieldError :error="errors.password" />
+          </FormField>
+          <FormField
+            for="confirmPassword"
+          >
+            <FormLabel text="Повторите пароль" />
+            <Input
+              id="confirmPassword"
+              v-model="confirmPassword"
+              name="confirmPassword"
+              v-bind="confirmPasswordAttrs"
+              type="password"
+            />
+            <FieldError :error="errors.confirmPassword" />
           </FormField>
 
-          <FormField
+          <!-- <FormField
             :cols="2"
             for=""
           >
             <span class="form-field-email-hint">
               Указанный email будет использован в качестве логина при автоматической регистрации. Также на него после оплаты придет полис в виде pdf файла
             </span>
-          </FormField>
+          </FormField> -->
         </FormFields>
       </fieldset>
 

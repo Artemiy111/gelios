@@ -1,9 +1,18 @@
-<script setup lang="ts">
-const model = defineModel<string>()
+<script setup lang="ts" generic="Type extends InputTypeHTMLAttribute, Model extends (Type extends 'date' ? Date : string)">
+import type { InputTypeHTMLAttribute } from 'vue'
+
+const props = defineProps<{
+  type: Type
+}>()
+
+const model = defineModel<Model>()
 </script>
 
 <template>
-  <input v-model="model">
+  <input
+    v-model="model"
+    :type="props.type"
+  >
 </template>
 
 <style scoped>
@@ -16,5 +25,9 @@ input {
 
   background: var(--color-foreground);
   border: none;
+
 }
+::placeholder {
+    color: var(--color-text-tertiary);
+  }
 </style>

@@ -16,12 +16,15 @@
   "dependencies": {
     "@nuxt/eslint": "^0.6.0",
     "@nuxt/fonts": "^0.10.1",
+    "@vee-validate/zod": "^4.14.6",
     "@vueuse/core": "^11.1.0",
     "lucide-vue-next": "^0.453.0",
     "modern-normalize": "^3.0.1",
     "nuxt": "^3.13.2",
+    "vee-validate": "^4.14.6",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "eslint": "^9.13.0",

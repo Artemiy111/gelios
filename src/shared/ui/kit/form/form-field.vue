@@ -28,6 +28,8 @@ const props = defineProps<{
   row-gap: 1rem;
   justify-content: flex-end;
 
+  min-width: 0;
+
   &[data-cols="2"] {
     grid-column: span 2;
   }

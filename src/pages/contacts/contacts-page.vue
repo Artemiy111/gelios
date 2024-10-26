@@ -49,7 +49,7 @@ const phone: TableRow[] = [
         <h2 class="text-base">
           Центральный офис компании
         </h2>
-        <span>350015, Краснодарский край, г Краснодар, ул Новокузнечная, д 40, оф 68</span>
+        <address>350015, Краснодарский край, г Краснодар, ул Новокузнечная, д 40, оф 68</address>
       </section>
 
       <section class="hours">
@@ -80,20 +80,20 @@ const phone: TableRow[] = [
           <tbody>
             <tr>
               <td colspan="2">
-                company@skgelios.ru
+                <address>company@skgelios.ru</address>
               </td>
             </tr>
             <tr>
               <th class="text-normal">
                 Отдел по работе с обращениями
               </th>
-              <td>ORsOb@skgelios.ru</td>
+              <td><address>ORsOb@skgelios.ru</address></td>
             </tr>
             <tr>
               <th class="text-normal">
                 Урегулирование убытков
               </th>
-              <td>Claims_Dept@skgelios.ru</td>
+              <td><address>Claims_Dept@skgelios.ru</address></td>
             </tr>
           </tbody>
         </table>
@@ -115,6 +115,10 @@ const phone: TableRow[] = [
   grid-template-columns: repeat(3, max-content);
   row-gap: 5rem;
   column-gap: 8rem;
+}
+
+address {
+  font-style: normal;
 }
 
 .office {

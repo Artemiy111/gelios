@@ -4,9 +4,24 @@ import { PageHeading } from '~~/src/shared/ui/page-heading'
 import { Button } from '~~/src/shared/ui/kit/button'
 import { Input } from '~~/src/shared/ui/kit/input'
 import { FormFields, FormField, FieldError, FormLabel } from '~~/src/shared/ui/kit/form'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { loginSchema } from '~~/src/shared/config/validation'
 
 const tabs = ['Физлицо', 'Ип', 'Юр лицо']
 const currentTab = ref(tabs[0]!)
+
+const { errors, handleSubmit, defineField, meta } = useForm({
+  validationSchema: toTypedSchema(loginSchema),
+  initialValues: { email: '', password: '' },
+})
+
+const [email, emailAttrs] = defineField('email', { validateOnModelUpdate: false })
+const [password, passwordAttrs] = defineField('password', { validateOnModelUpdate: false })
+
+const onSubmit = handleSubmit((values) => {
+  console.log(values)
+})
 </script>
 
 <template>
@@ -16,18 +31,21 @@ const currentTab = ref(tabs[0]!)
     :tabs="tabs"
   />
   <section class="form-section">
-    <form>
+    <form @submit.prevent="onSubmit">
       <FormFields>
         <FormField
           :cols="2"
           for="login"
         >
-          <FormLabel text="Телефон или email" />
+          <FormLabel text="Email" />
           <Input
+            v-bind="emailAttrs"
             id="login"
+            v-model="email"
+            name="email"
             type="text"
           />
-          <FieldError error="Обязательное поле" />
+          <FieldError :error="errors.email" />
         </FormField>
 
         <FormField
@@ -36,17 +54,20 @@ const currentTab = ref(tabs[0]!)
         >
           <FormLabel text="Пароль" />
           <Input
+            v-bind="passwordAttrs"
             id="password"
+            v-model="password"
+            name="password"
             type="password"
           />
-          <FieldError />
+          <FieldError :error="errors.password" />
         </FormField>
       </FormFields>
 
       <div class="form-actions">
         <Button
+          :disabled="!meta.valid"
           type="submit"
-          variant="secondary"
         >
           Продолжить
         </Button>
