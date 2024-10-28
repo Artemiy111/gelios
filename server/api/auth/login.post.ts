@@ -1,27 +1,20 @@
+import { Argon2id } from 'oslo/password'
+import { userRepo } from '~~/server/repos/user'
 import { loginSchema } from '~~/src/shared/config/validation'
 
 export default defineEventHandler(async (event) => {
-  const data = await readValidatedBody(event, loginSchema.parse)
+  const body = await readValidatedBody(event, loginSchema.parse)
 
-  if (!email || !password) {
-    return json({ error: 'Не указаны поля для входа' }, 400)
-  }
+  const existingUser = await userRepo.getOneByEmail(body.email)
+  if (!existingUser) throw createError({ statusCode: 400, message: 'Неверный логин или пароль' })
 
-  const user = await getUserByEmail(email)
+  const isValidPassword = await new Argon2id().verify(existingUser.passwordHash, body.password)
+  if (!isValidPassword) throw createError({
+    statusCode: 400,
+    message: 'Неверный логин или пароль',
+  })
 
-  if (!user) {
-    return json({ error: 'Не найден пользователь' }, 400)
-  }
+  setCookie(event, 'userId', existingUser.id.toString(), { maxAge: 60 * 60 * 24 * 30 })
 
-  if (!user.password) {
-    return json({ error: 'Пользователь не имеет пароля' }, 400)
-  }
-
-  const isPasswordCorrect = await comparePassword(password, user.password)
-
-  if (!isPasswordCorrect) {
-    return json({ error: 'Неверный пароль' }, 400)
-  }
-
-  return json({ token: generateToken(user) })
+  return existingUser
 })

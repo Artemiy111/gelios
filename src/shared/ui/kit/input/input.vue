@@ -1,9 +1,12 @@
 <script setup lang="ts" generic="Type extends InputTypeHTMLAttribute, Model extends (Type extends 'date' ? Date : string)">
 import type { InputTypeHTMLAttribute } from 'vue'
 
-const props = defineProps<{
-  type: Type
-}>()
+const props = withDefaults(defineProps<{
+  type?: Type
+}>(), {
+  // @ts-expect-error: generic type is not working properly
+  type: 'text',
+})
 
 const model = defineModel<Model>()
 </script>

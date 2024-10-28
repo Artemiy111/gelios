@@ -4,6 +4,9 @@ import { Separator } from '~~/src/shared/ui/kit/separator'
 import { ButtonLink } from '~~/src/shared/ui/kit/button-link'
 import { Input } from '~~/src/shared/ui/kit/input'
 import { Button } from '~~/src/shared/ui/kit/button'
+import { useUserModel } from '~~/src/shared/model'
+
+const userModel = useUserModel()
 
 const searchMenuRef = ref<HTMLDialogElement>(null!)
 const search = ref('')
@@ -42,9 +45,12 @@ const cities = ['Москва', 'Санкт-Петербург', 'Казань',
 const currentCity = ref(cities[0])
 
 const cityPopoverRef = ref<HTMLDivElement>(null!)
-
 const openCity = () => cityPopoverRef.value.showPopover()
 const closeCity = () => cityPopoverRef.value.hidePopover()
+
+const userSettingsRef = ref<HTMLDivElement>(null!)
+const openUserSettings = () => userSettingsRef.value.showPopover()
+const closeUserSettings = () => userSettingsRef.value.hidePopover()
 </script>
 
 <template>
@@ -161,12 +167,41 @@ const closeCity = () => cityPopoverRef.value.hidePopover()
           8 800 1 007 007
         </NuxtLink>
         <ButtonLink
+          v-if="!userModel.user"
           class="button-pad-start"
           to="/login"
           variant="secondary"
         >
           Вход
         </ButtonLink>
+        <div
+          v-else
+          class="user-settings text-pad-start"
+        >
+          <button
+            class="user-settings-button"
+            popovertarget="user-settings"
+            popovertargetaction="show"
+            type="button"
+            @pointerenter="openUserSettings"
+          >
+            {{ userModel.user.firstName }}
+          </button>
+          <div
+            id="user-settings"
+            ref="userSettingsRef"
+            class="user-settings-popover"
+            popover
+            @pointerleave="closeUserSettings"
+          >
+            <Button
+              variant="secondary"
+              @click="userModel.logout"
+            >
+              Выйти
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
     <Separator />
@@ -212,6 +247,7 @@ const closeCity = () => cityPopoverRef.value.hidePopover()
   width: 2.4rem;
   height: 2.4rem;
   transition: color 0.3s;
+
   &:hover {
     color: var(--color-accent);
   }
@@ -377,6 +413,7 @@ const closeCity = () => cityPopoverRef.value.hidePopover()
   transition: all 0.3s;
 
   position-anchor: --city;
+  /* stylelint-disable-next-line property-no-unknown -- position-area */
   position-area: span-bottom span-right;
   transition-behavior: allow-discrete;
 
@@ -413,6 +450,39 @@ const closeCity = () => cityPopoverRef.value.hidePopover()
 
   & input {
     appearance: none;
+  }
+}
+
+.user-settings {
+  anchor-name: --user-settings;
+
+  .user-settings-button {
+    transition: color var(--transition-duration);
+
+    &:hover {
+      color: var(--color-accent)
+    }
+  }
+
+  & [popover] {
+    position-anchor: --user-settings;
+    position-area: bottom;
+    border: 1px solid var(--color-separator);
+    padding-block: 3rem;
+    padding-inline: 3rem;
+
+    transition: all var(--transition-duration);
+    transition-behavior: allow-discrete;
+    opacity: 0;
+    background: var(--color-background);
+
+    &:popover-open {
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
   }
 }
 </style>

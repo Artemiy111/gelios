@@ -13,6 +13,7 @@ export const validationErrors = {
   minDate: (min: Date) => `Дата должна быть не раньше ${formatter.format(min)}`,
   maxDate: (max: Date) => `Дата должна быть не позже ${formatter.format(max)}`,
   passwordsNotMatch: 'Пароли не совпадают',
+  invalidPhoneNumber: 'Неверный номер телефона',
 }
 
 const requiredStringSchema = z.string({ message: validationErrors.required })
@@ -29,20 +30,25 @@ export const loginSchema = z.object({
   password: passwordSchema,
 })
 
+export type LoginRequest = z.infer<typeof loginSchema>
+
 export type DocumentType = 'residence-permit' | 'passport-russian' | 'passport-foreign' | 'temporary-id-russian'
 
-export const documentTypes: DocumentType[] = ['residence-permit', 'passport-russian', 'passport-foreign', 'temporary-id-russian']
+export const documentTypes = ['residence-permit', 'passport-russian', 'passport-foreign', 'temporary-id-russian'] as const
 export const documentTypesMap: Record<DocumentType, string> = {
   'residence-permit': 'Удостоверение личности',
   'passport-russian': 'Паспорт РФ',
   'passport-foreign': 'Паспорт иностранного гражданина',
   'temporary-id-russian': 'Временный удостоверение личности гражданина РФ',
 }
-export const documentTypesWithName = documentTypes.map(documentType => ({ value: documentType, name: documentTypesMap[documentType] }))
+export const documentTypesWithNames = documentTypes.map(documentType => ({ value: documentType, name: documentTypesMap[documentType] }))
 
 export const documentTypeSchema = z.enum(['residence-permit', 'passport-russian', 'passport-foreign', 'temporary-id-russian'], { message: validationErrors.required })
 
-const dateSchema = z.coerce.date({ message: validationErrors.required }).min(new Date('1900-01-01'), validationErrors.minDate(new Date('1900-01-01'))).max(new Date(), validationErrors.maxDate(new Date()))
+const dateSchema = z
+  .coerce.date({ message: validationErrors.required })
+  .min(new Date('1900-01-01'), validationErrors.minDate(new Date('1900-01-01')))
+  .max(new Date(), validationErrors.maxDate(new Date()))
 
 export const registerSchema = z.object({
   firstName: getMinMaxStringSchema(2, 128),
@@ -53,10 +59,13 @@ export const registerSchema = z.object({
   seriesAndNumber: getMinMaxStringSchema(8, 20),
   issuedDate: dateSchema,
   issuedBy: getMinMaxStringSchema(2, 128),
-  phone: requiredStringSchema.regex(/^\+?[0-9]{1,3}-?[0-9]{3,}$/),
+  phone: requiredStringSchema.regex(/^\+?[0-9]{1,3}-?[0-9]{3,}$/, { message: validationErrors.invalidPhoneNumber }),
   email: emailSchema,
   password: passwordSchema,
   confirmPassword: passwordSchema,
 }).refine(ctx => ctx.password === ctx.confirmPassword, {
   message: validationErrors.passwordsNotMatch,
+  path: ['confirmPassword'],
 })
+
+export type RegisterRequest = z.infer<typeof registerSchema>

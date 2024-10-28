@@ -1,14 +1,17 @@
 <script setup lang="ts">
+import type { ButtonHTMLAttributes } from 'vue'
+
 const props = withDefaults(defineProps<{
+  type?: ButtonHTMLAttributes['type']
   variant?: 'primary' | 'secondary'
   disabled?: boolean
 }>(), {
   variant: 'primary',
+  type: 'button',
 })
 </script>
 
 <template>
-  <!-- eslint-disable vue/html-button-has-type -->
   <button
     class="text-small"
     :class="{
@@ -16,6 +19,7 @@ const props = withDefaults(defineProps<{
       secondary: props.variant === 'secondary',
     }"
     :disabled="props.disabled"
+    :type="props.type"
   >
     <slot />
   </button>
@@ -25,20 +29,13 @@ const props = withDefaults(defineProps<{
 button {
   height: fit-content;
   padding: 1rem 2.2rem;
-
-  /* color: var(--is-primary, var(--color-background)) var(--is-secondary, var(--color-text-base));
-
-  background: var(--is-primary, var(--color-text-base)) var(--is-secondary, var(--color-foreground)); */
+  background: var(--is-primary, var(--color-text-base)) var(--is-secondary, var(--color-foreground));
   border: none;
   transition: color 0.3s, background 0.3s;
-/*
-  &:hover {
-    color: var(--is-primary, var(--color-text-base)) var(--is-secondary, var(--color-background));
-    background: var(--is-primary, var(--color-accent)) var(--is-secondary, var(--color-text-base));
-  } */
-   &[disabled] {
-      cursor:default;
-   }
+
+  &[disabled] {
+    cursor:default;
+  }
 }
 
 .primary {

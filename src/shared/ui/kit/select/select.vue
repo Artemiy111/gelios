@@ -7,17 +7,32 @@ const props = defineProps<{
     name: string
   }>
 }>()
+
 const model = defineModel<string>()
+
+const emit = defineEmits<{
+  open: []
+  close: []
+  blur: []
+}>()
 
 const id = 'select-' + useId()
 
-const currentValueName = computed(() => {
-  return props.options.find(option => option.value === model.value)?.name
-})
+const currentValueName = computed(() => props.options.find(option => option.value === model.value)?.name)
 const hasPlaceholder = computed(() => currentValueName.value === undefined)
 
 const popover = useTemplateRef<HTMLDivElement>('popover')
-const close = () => popover.value?.hidePopover()
+
+const close = () => {
+  emit('close')
+  emit('blur')
+  popover.value?.hidePopover()
+}
+
+const onToggle = (e: ToggleEvent) => {
+  if (e.newState === 'open') emit('open')
+  if (e.newState === 'closed') close()
+}
 </script>
 
 <template>
@@ -36,6 +51,7 @@ const close = () => popover.value?.hidePopover()
       class=""
       popover
       role="combobox"
+      @toggle="onToggle"
     >
       <ul>
         <li
@@ -101,12 +117,13 @@ span.placeholder {
   padding-inline: 3rem;
 
   opacity: 0;
-  background: var(--color-foreground);
-  border: none;
+  background: var(--color-background);
+  border: 1px solid var(--color-separator);
 
   transition: opacity var(--transition-duration);
 
   position-anchor: --select;
+  /* stylelint-disable-next-line property-no-unknown -- position-area */
   position-area: bottom span-right;
   transition-behavior: allow-discrete;
 

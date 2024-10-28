@@ -6,17 +6,27 @@ import { FormFields, FormField, FieldError, FormLabel } from '~~/src/shared/ui/k
 import { Tabs } from '~~/src/shared/ui/tabs'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
-import { documentTypesWithName as documentTypesWithNames, registerSchema } from '~~/src/shared/config/validation'
+import { documentTypesWithNames, registerSchema } from '~~/src/shared/config/validation'
 import { Select } from '~~/src/shared/ui/kit/select'
-import { options } from '#build/eslint.config.mjs'
+import { useUserModel } from '~~/src/shared/model'
 
 const tabs = ['Физлицо', 'Ип', 'Юр лицо']
 const currentTab = ref(tabs[0]!)
 
-const { errors, meta, handleSubmit, defineField } = useForm({ validationSchema: toTypedSchema(registerSchema) })
+const userModel = useUserModel()
+const { errors, meta, handleSubmit, defineField } = useForm({ validationSchema: toTypedSchema(registerSchema), initialValues: {
+  firstName: 'Артемий',
+  lastName: 'Набойщиков',
+  middleName: 'Андреевич',
+  email: 'mrart111@mail.ru',
+  phone: '+79999999999',
+  documentType: 'passport-russian',
+  seriesAndNumber: '9090808080',
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values)
+} })
+
+const onSubmit = handleSubmit(async (values) => {
+  await userModel.register(values)
 })
 
 const [firstName, firstNameAttrs] = defineField('firstName', { validateOnModelUpdate: false })
@@ -102,14 +112,11 @@ const [confirmPassword, confirmPasswordAttrs] = defineField('confirmPassword', {
             for="documentType"
           >
             <FormLabel text="Тип документа" />
-            <!-- <Input
-              id="documentType"
+            <Select
               v-model="documentType"
-              name="documentType"
+              :options="documentTypesWithNames"
               v-bind="documentTypeAttrs"
-              type="text"
-            /> -->
-            <Select :options="documentTypesWithNames" />
+            />
             <FieldError :error="errors.documentType" />
           </FormField>
           <FormField
@@ -217,6 +224,7 @@ const [confirmPassword, confirmPasswordAttrs] = defineField('confirmPassword', {
 
       <div class="form-actions">
         <Button
+          :disabled="!meta.valid"
           type="submit"
         >
           Зарегистрироваться
