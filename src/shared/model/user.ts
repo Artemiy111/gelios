@@ -3,8 +3,10 @@ import { usersApi, type LoginRequest } from '../api'
 import { authApi } from '../api/auth'
 import type { RegisterRequest } from '../config/validation'
 
+export type UserDto = Omit<UserDb, 'passwordHash'>
+
 export const userModel = defineStore('user', () => {
-  const user = ref<UserDb | null>(null)
+  const user = ref<UserDto | null>(null)
 
   const login = async (data: LoginRequest) => {
     const user_ = await authApi.login(data)

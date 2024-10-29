@@ -32,9 +32,10 @@ export const loginSchema = z.object({
 
 export type LoginRequest = z.infer<typeof loginSchema>
 
-export type DocumentType = 'residence-permit' | 'passport-russian' | 'passport-foreign' | 'temporary-id-russian'
-
 export const documentTypes = ['residence-permit', 'passport-russian', 'passport-foreign', 'temporary-id-russian'] as const
+
+export type DocumentType = typeof documentTypes[number]
+
 export const documentTypesMap: Record<DocumentType, string> = {
   'residence-permit': 'Удостоверение личности',
   'passport-russian': 'Паспорт РФ',
@@ -43,10 +44,14 @@ export const documentTypesMap: Record<DocumentType, string> = {
 }
 export const documentTypesWithNames = documentTypes.map(documentType => ({ value: documentType, name: documentTypesMap[documentType] }))
 
-export const documentTypeSchema = z.enum(['residence-permit', 'passport-russian', 'passport-foreign', 'temporary-id-russian'], { message: validationErrors.required })
+export const documentTypeSchema = z.enum(documentTypes, { message: validationErrors.required })
 
 const dateSchema = z
-  .coerce.date({ message: validationErrors.required })
+  .coerce.date({
+    errorMap: () => ({
+      message: validationErrors.required,
+    }),
+  })
   .min(new Date('1900-01-01'), validationErrors.minDate(new Date('1900-01-01')))
   .max(new Date(), validationErrors.maxDate(new Date()))
 

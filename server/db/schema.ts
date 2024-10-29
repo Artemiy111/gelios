@@ -2,19 +2,6 @@ import { relations } from 'drizzle-orm'
 import { sqliteTable, int, text } from 'drizzle-orm/sqlite-core'
 import { documentTypes } from '../../src/shared/config/validation'
 
-export type User = {
-  email: string
-  firstName: string
-  lastName: string
-  middleName: string
-  dateOfBirth: Date
-  documentType: string
-  seriesAndNumber: string
-  issuedDate: Date
-  issuedBy: string
-  phone: string
-}
-
 export const users = sqliteTable('users', {
   id: int('id').primaryKey({ autoIncrement: true }),
   firstName: text('first_name').notNull(),
@@ -34,6 +21,19 @@ export const usersRelations = relations(users, () => ({}))
 
 export type UserDb = typeof users.$inferSelect
 export type UserDbCreate = typeof users.$inferInsert
+
+export type User = {
+  email: string
+  firstName: string
+  lastName: string
+  middleName: string
+  dateOfBirth: Date
+  documentType: string
+  seriesAndNumber: string
+  issuedDate: Date
+  issuedBy: string
+  phone: string
+}
 
 export const serviceSections = ['property', 'health'] as const
 export type ServiceSection = typeof serviceSections[number]

@@ -1,6 +1,7 @@
 import { registerSchema } from '~~/src/shared/config/validation'
 import { Argon2id } from 'oslo/password'
 import { userRepo } from '~~/server/repos/user'
+import { userMapper } from '~~/server/mappers/user'
 
 const dateToString = (date: Date) => date.toISOString().slice(0, 10)
 
@@ -18,5 +19,5 @@ export default defineEventHandler(async (event) => {
 
   setCookie(event, 'userId', user.id.toString())
 
-  return user
+  return userMapper.fromDb(user)
 })

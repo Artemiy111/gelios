@@ -7,6 +7,9 @@ import { FormFields, FormField, FieldError, FormLabel } from '~~/src/shared/ui/k
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { loginSchema } from '~~/src/shared/config/validation'
+import { useUserModel } from '~~/src/shared/model'
+
+const userModel = useUserModel()
 
 const tabs = ['Физлицо', 'Ип', 'Юр лицо']
 const currentTab = ref(tabs[0]!)
@@ -19,8 +22,8 @@ const { errors, handleSubmit, defineField, meta } = useForm({
 const [email, emailAttrs] = defineField('email', { validateOnModelUpdate: false })
 const [password, passwordAttrs] = defineField('password', { validateOnModelUpdate: false })
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values)
+const onSubmit = handleSubmit(async (values) => {
+  await userModel.login(values)
 })
 </script>
 

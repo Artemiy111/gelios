@@ -1,4 +1,5 @@
 import { Argon2id } from 'oslo/password'
+import { userMapper } from '~~/server/mappers/user'
 import { userRepo } from '~~/server/repos/user'
 import { loginSchema } from '~~/src/shared/config/validation'
 
@@ -16,5 +17,5 @@ export default defineEventHandler(async (event) => {
 
   setCookie(event, 'userId', existingUser.id.toString(), { maxAge: 60 * 60 * 24 * 30 })
 
-  return existingUser
+  return userMapper.fromDb(existingUser)
 })

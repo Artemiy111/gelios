@@ -32,6 +32,7 @@ export default withNuxt(
       'vue/attributes-order': ['error', {
         alphabetical: true,
       }],
+      'vue/no-v-html': 'off',
       'vue/block-lang': ['error', { script: { lang: 'ts' } }],
       'vue/block-order': ['error', { order: ['script', 'template', 'style'] }],
       'vue/component-api-style': ['error', ['script-setup']],
