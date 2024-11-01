@@ -3,6 +3,7 @@ import { PageHeading } from '~~/src/shared/ui/page-heading'
 import type { BreadCrumb } from '~~/src/shared/ui/page-heading/types'
 import { Input } from '~~/src/shared/ui/kit/input'
 import { useServicesModel } from '~~/src/shared/model/services'
+import { watchImmediate } from '@vueuse/core'
 
 const props = defineProps<{
   search?: string
@@ -15,7 +16,7 @@ const breadcrumbs: BreadCrumb[] = [
   { name: 'Каталог' },
 ]
 
-watch(() => props.search, () => {
+watchImmediate(() => props.search, () => {
   servicesModel.filter = props.search ?? ''
 })
 </script>
@@ -34,42 +35,7 @@ watch(() => props.search, () => {
   />
 
   <section class="sections">
-    <template v-if="servicesModel.filteredServicesBySection.length ">
-      <section
-        v-for="(section, sectionIdx) in servicesModel.filteredServicesBySection"
-        :key="section.section"
-        class="section"
-      >
-        <component
-          :is="sectionIdx === 0 ? 'h2' : 'h3'"
-          class="text-subheading"
-        >
-          {{ section.title }}
-        </component>
-        <div class="services">
-          <div
-            v-for="item in section.services"
-            :key="item.title"
-            class="service"
-          >
-            <img
-              v-if="item.image"
-              :alt="item.title"
-              :src="item.image"
-            >
-            <div
-              v-else
-              class="service-image-placeholder"
-            />
-            <h4 class="service-title">
-              {{ item.title }}
-            </h4>
-            <span class="service-description">{{ item.description }}</span>
-          </div>
-        </div>
-      </section>
-    </template>
-    <template v-else>
+    <template v-if="servicesModel.status === 'loading'">
       <div class="section section-skeleton">
         <div class="section-skeleton-title" />
         <div class="services">
@@ -84,6 +50,42 @@ watch(() => props.search, () => {
           </div>
         </div>
       </div>
+    </template>
+    <template v-else>
+      <section
+        v-for="(section, sectionIdx) in servicesModel.filteredServicesBySection"
+        :key="section.section"
+        class="section"
+      >
+        <component
+          :is="sectionIdx === 0 ? 'h2' : 'h3'"
+          class="text-subheading"
+        >
+          {{ section.title }}
+        </component>
+        <div class="services">
+          <NuxtLink
+            v-for="item in section.services"
+            :key="item.title"
+            class="service"
+            :to="`/catalog/${item.id}`"
+          >
+            <img
+              v-if="item.image"
+              :alt="item.title"
+              :src="item.image"
+            >
+            <div
+              v-else
+              class="service-image-placeholder"
+            />
+            <h4 class="service-title">
+              {{ item.title }}
+            </h4>
+            <span class="service-description">{{ item.description }}</span>
+          </NuxtLink>
+        </div>
+      </section>
     </template>
   </section>
 </template>

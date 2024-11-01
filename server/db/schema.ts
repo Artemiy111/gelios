@@ -17,7 +17,9 @@ export const users = sqliteTable('users', {
   passwordHash: text('password_hash').notNull(),
 })
 
-export const usersRelations = relations(users, () => ({}))
+export const usersRelations = relations(users, ({ many }) => ({
+  feedbacks: many(feedbacks),
+}))
 
 export type UserDb = typeof users.$inferSelect
 export type UserDbCreate = typeof users.$inferInsert
@@ -44,9 +46,27 @@ export const services = sqliteTable('services', {
   title: text('title').notNull(),
   description: text('description').notNull(),
   image: text('image'),
+  price: int(),
 })
 
 export const servicesRelations = relations(services, () => ({}))
 
 export type ServiceDb = typeof services.$inferSelect
 export type ServiceDbCreate = typeof services.$inferInsert
+
+export const feedbacks = sqliteTable('feedbacks', {
+  id: int('id').primaryKey({ autoIncrement: true }),
+  userId: int('user_id').notNull(),
+  comment: text('comment').notNull(),
+})
+
+export const feedbacksRelations = relations(feedbacks, ({ one }) => ({
+  user: one(users, {
+    fields: [feedbacks.userId],
+    references: [users.id],
+    relationName: 'user',
+  }),
+}))
+
+export type FeedbackDb = typeof feedbacks.$inferSelect
+export type FeedbackDbCreate = typeof feedbacks.$inferInsert

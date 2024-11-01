@@ -1,7 +1,7 @@
 import type { UserDb } from '~~/server/db/schema'
 import { usersApi, type LoginRequest } from '../api'
 import { authApi } from '../api/auth'
-import type { RegisterRequest } from '../config/validation'
+import type { FeedbackRequest, RegisterRequest } from '../config/validation'
 
 export type UserDto = Omit<UserDb, 'passwordHash'>
 
@@ -11,10 +11,12 @@ export const userModel = defineStore('user', () => {
   const login = async (data: LoginRequest) => {
     const user_ = await authApi.login(data)
     user.value = user_
+    await navigateTo('/catalog')
   }
   const register = async (data: RegisterRequest) => {
     const user_ = await authApi.register(data)
     user.value = user_
+    await navigateTo('/catalog')
   }
 
   const logout = async () => {
@@ -23,10 +25,15 @@ export const userModel = defineStore('user', () => {
   }
 
   const load = async () => {
-    user.value = (await usersApi.getMe()) ?? null
+    const data = (await usersApi.getMe())
+    user.value = data ?? null
   }
 
-  load()
+  const sendFeedback = async (data: FeedbackRequest) => {
+    await usersApi.sendFeedback(data)
+  }
+
+  // load()
 
   return {
     user,
@@ -34,5 +41,6 @@ export const userModel = defineStore('user', () => {
     register,
     logout,
     load,
+    sendFeedback,
   }
 })

@@ -74,3 +74,9 @@ export const registerSchema = z.object({
 })
 
 export type RegisterRequest = z.infer<typeof registerSchema>
+
+export const feedbackSchema = z.object({
+  comment: getMinMaxStringSchema(5, 1024),
+})
+
+export type FeedbackRequest = z.infer<typeof feedbackSchema>

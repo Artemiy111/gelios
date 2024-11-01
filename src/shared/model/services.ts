@@ -9,8 +9,11 @@ export const serviceSectionsMap: Record<ServiceSection, string> = {
 export const serviceSections: ServiceSection[] = ['property', 'health']
 export const serviceSectionsWithNames = serviceSections.map(section => ({ value: section, name: serviceSectionsMap[section] }))
 
+type Status = 'idle' | 'loading' | 'success' | 'fail'
+
 export const useServicesModel = defineStore('services', () => {
   const services = ref<ServiceDb[]>([])
+  const status = ref<Status>('idle')
 
   const servicesBySection = computed(() => {
     const grouped = Object.groupBy(services.value, service => service.section)
@@ -52,7 +55,20 @@ export const useServicesModel = defineStore('services', () => {
   })
 
   const load = async () => {
-    services.value = await servicesApi.getAll()
+    try {
+      status.value = 'loading'
+      services.value = await servicesApi.getAll()
+      status.value = 'success'
+    }
+    catch (_e) {
+      status.value = 'fail'
+      throw _e
+    }
+  }
+
+  const useService = (id: number) => {
+    const service = computed(() => services.value.find(service => service.id === id))
+    return service
   }
 
   load()
@@ -60,7 +76,9 @@ export const useServicesModel = defineStore('services', () => {
   return {
     services,
     servicesBySection,
+    status,
     load,
+    useService,
     filter,
     filteredServicesBySection,
   }

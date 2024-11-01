@@ -3,28 +3,50 @@ import { PageHeading } from '~~/src/shared/ui/page-heading'
 import { Button } from '~~/src/shared/ui/kit/button'
 import { Textarea } from '~~/src/shared/ui/kit/textarea'
 import { FormFields, FormField, FieldError, FormLabel } from '~~/src/shared/ui/kit/form'
+import { useUserModel } from '~~/src/shared/model'
+import { feedbackSchema } from '~~/src/shared/config/validation'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/zod'
+import { ensureAuthenticated } from '~~/src/shared/model/ensure-authenticated'
+
+ensureAuthenticated()
+
+const userModel = useUserModel()
+
+const { errors, meta, handleSubmit, defineField } = useForm({
+  validationSchema: toTypedSchema(feedbackSchema),
+})
+const [comment, commentAttrs] = defineField('comment', { validateOnModelUpdate: false })
+
+const onSubmit = handleSubmit(async (data) => {
+  await userModel.sendFeedback(data)
+})
 </script>
 
 <template>
   <PageHeading title="Обратная связь" />
   <section class="form-section">
-    <form>
+    <form @submit.prevent="onSubmit">
       <FormFields>
         <FormField
           :cols="4"
-          for="login"
+          for="comment"
         >
           <FormLabel text="Оставьте своё мнение" />
           <Textarea
-            id="login"
+            v-bind="commentAttrs"
+            id="comment"
+            v-model="comment"
+            name="comment"
             type="text"
           />
-          <FieldError />
+          <FieldError :error="errors.comment" />
         </FormField>
       </FormFields>
 
       <div class="form-actions">
         <Button
+          :disabled="!meta.valid"
           type="submit"
         >
           Отправить

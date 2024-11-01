@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { useUserModel } from '~~/src/shared/model'
 import Separator from '~~/src/shared/ui/kit/separator/Separator.vue'
 
-const links = [
+const userModel = useUserModel()
+
+const staticLinks = [
   {
     name: 'Реквизиты',
     url: '/',
@@ -18,10 +21,14 @@ const links = [
     name: 'Карта сайта',
     url: '/',
   },
-  {
-    name: 'Обратная связь',
-    url: '/feedback',
-  }]
+]
+
+const links = computed(() => userModel.user
+  ? [...staticLinks, {
+      name: 'Обратная связь',
+      url: '/feedback',
+    }]
+  : staticLinks)
 </script>
 
 <template>
