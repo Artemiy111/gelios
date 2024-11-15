@@ -3,12 +3,17 @@ import { useServicesModel } from '~~/src/shared/model/services'
 import PageHeading from '~~/src/shared/ui/page-heading/page-heading.vue'
 import { Button } from '~~/src/shared/ui/kit/button'
 import type { BreadCrumb } from '~~/src/shared/ui/page-heading/types'
+import { useShoppingCartModel } from '~~/src/shared/model/shopping-cart'
+import { Minus, Plus } from 'lucide-vue-next'
 
 const props = defineProps<{
   id: number
 }>()
 
 const servicesModel = useServicesModel()
+const shoppingCartModel = useShoppingCartModel()
+
+const shoppingItem = shoppingCartModel.useItem(props.id)
 
 const service = servicesModel.useService(props.id)
 watch(service, () => {
@@ -39,9 +44,31 @@ const breadcrumbs = computed<BreadCrumb[]>(() => [
         <p class="text-bold service-price">
           Цена {{ service.price }} Р
         </p>
-        <Button class="service-button">
-          Заказать услугу
-        </Button>
+        <div class="service-buttons">
+          <Button
+            v-if="!shoppingItem"
+            @click="shoppingCartModel.increaseItem(service)"
+          >
+            Добавить в корзину
+          </Button>
+          <template
+            v-else
+          >
+            <button
+              type="button"
+              @click="shoppingCartModel.decreaseItem(shoppingItem.service)"
+            >
+              <Minus />
+            </button>
+            {{ shoppingItem.count }}
+            <button
+              type="button"
+              @click="shoppingCartModel.increaseItem(shoppingItem.service)"
+            >
+              <Plus />
+            </button>
+          </template>
+        </div>
       </div>
     </section>
   </template>
@@ -60,7 +87,9 @@ const breadcrumbs = computed<BreadCrumb[]>(() => [
   height: auto;
 }
 
-.service-button {
+.service-buttons {
   margin-block-start: 3rem;
+  display: flex;
+  column-gap: 2rem;
 }
 </style>

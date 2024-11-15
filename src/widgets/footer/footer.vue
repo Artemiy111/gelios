@@ -15,7 +15,8 @@ const staticLinks = [
   },
   {
     name: 'Пользовательское соглашение',
-    url: '/',
+    url: '/user-agreement.pdf',
+    target: '_blank',
   }, {
 
     name: 'Карта сайта',
@@ -40,6 +41,7 @@ const links = computed(() => userModel.user
           v-for="link in links"
           :key="link.url"
           class="link"
+          :target="link.target"
           :to="link.url"
         >
           {{ link.name }}

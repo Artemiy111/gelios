@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { Menu, Search } from 'lucide-vue-next'
+import { Menu, Search, ShoppingBag, Minus, Plus } from 'lucide-vue-next'
 import { Separator } from '~~/src/shared/ui/kit/separator'
 import { ButtonLink } from '~~/src/shared/ui/kit/button-link'
 import { Input } from '~~/src/shared/ui/kit/input'
 import { Button } from '~~/src/shared/ui/kit/button'
 import { useUserModel } from '~~/src/shared/model'
+import { useShoppingCartModel } from '~~/src/shared/model/shopping-cart'
 
 const userModel = useUserModel()
 
@@ -44,13 +45,15 @@ const closeBurger = () => burgerMenuRef.value.hidePopover()
 const cities = ['Москва', 'Санкт-Петербург', 'Казань', 'Екатеринбург', 'Мурманск', 'Самара', 'Новосибирск', 'Красноярск']
 const currentCity = ref(cities[0])
 
-const cityPopoverRef = ref<HTMLDivElement>(null!)
-const openCity = () => cityPopoverRef.value.showPopover()
-const closeCity = () => cityPopoverRef.value.hidePopover()
+const cityPopoverRef = useTemplateRef('cityPopoverRef')
+const openCity = () => cityPopoverRef.value?.showPopover()
+const closeCity = () => cityPopoverRef.value?.hidePopover()
 
-const userSettingsRef = ref<HTMLDivElement>(null!)
-const openUserSettings = () => userSettingsRef.value.showPopover()
-const closeUserSettings = () => userSettingsRef.value.hidePopover()
+const userSettingsRef = useTemplateRef('userSettingsRef')
+const openUserSettings = () => userSettingsRef.value?.showPopover()
+const closeUserSettings = () => userSettingsRef.value?.hidePopover()
+
+const shoppingCartModel = useShoppingCartModel()
 </script>
 
 <template>
@@ -185,7 +188,7 @@ const closeUserSettings = () => userSettingsRef.value.hidePopover()
             type="button"
             @pointerenter="openUserSettings"
           >
-            {{ userModel.user.firstName }}
+            {{ userModel.user.lastName }} {{ userModel.user.firstName }}
           </button>
           <div
             id="user-settings"
@@ -201,6 +204,85 @@ const closeUserSettings = () => userSettingsRef.value.hidePopover()
               Выйти
             </Button>
           </div>
+        </div>
+        <div class="shopping icon-pad-start">
+          <button
+            class="shopping-button"
+            popovertarget="shopping"
+            popovertargetaction="show"
+            type="button"
+          >
+            <ShoppingBag class="icon" />
+            <div
+              id="shopping"
+              class="shopping-popover"
+              popover
+            >
+              <div
+                v-if="! shoppingCartModel.items.length"
+                class="not-found"
+              >
+                Корзина пуста
+              </div>
+              <table
+                v-else
+                class="shopping-table"
+              >
+                <tbody>
+                  <tr
+                    v-for="item in shoppingCartModel.items"
+                    :key="item.id"
+                  >
+                    <td>
+                      <img
+                        :alt="item.service.title"
+                        :src="item.service.image"
+                      >
+                    </td>
+                    <td class="cart-item-title">
+                      {{ item.service.title }}
+                    </td>
+                    <td> {{ item.count * item.service.price }}р</td>
+                    <td class="cart-item-count">
+                      <button
+                        type="button"
+                        @click="shoppingCartModel.decreaseItem(item.service)"
+                      >
+                        <Minus />
+                      </button>
+                      {{ item.count }}
+                      <button
+                        type="button"
+                        @click="shoppingCartModel.increaseItem(item.service)"
+                      >
+                        <Plus />
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p
+                        v-if="!userModel.user"
+                        class="text-small shopping-buy-message"
+                      >
+                        Войдите, чтобы&nbsp;купить
+                      </p>
+                    </td>
+                    <td>Итого</td>
+                    <td>{{ shoppingCartModel.totalPrice }} Р</td>
+                    <td>
+                      <Button
+                        :disabled="!userModel.user"
+                        @click="shoppingCartModel.purchase"
+                      >
+                        Купить
+                      </Button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </button>
         </div>
       </div>
     </div>
@@ -246,7 +328,7 @@ const closeUserSettings = () => userSettingsRef.value.hidePopover()
 .icon {
   width: 2.4rem;
   height: 2.4rem;
-  transition: color 0.3s;
+  transition: color var(--transition-duration);
 
   &:hover {
     color: var(--color-accent);
@@ -483,6 +565,79 @@ const closeUserSettings = () => userSettingsRef.value.hidePopover()
         opacity: 0;
       }
     }
+  }
+}
+
+.shopping {
+  anchor-name: --shopping;
+}
+
+.shopping-popover {
+
+  position-anchor: --shopping;
+  position-area: span-left bottom;
+  border: 1px solid var(--color-separator);
+
+  padding-block: 3rem;
+  padding-inline: 3rem;
+  transition: all var(--transition-duration);
+  transition-behavior: allow-discrete;
+  background: var(--color-background);
+  opacity: 0;
+
+  &:popover-open {
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  & table {
+    display: grid;
+    grid-template-columns: 20rem 20rem 20rem max-content;
+    column-gap: 2rem;
+  }
+
+  & tbody {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    row-gap: 3rem;
+
+  }
+
+  & tr {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    align-items: center;
+    text-align: left;
+    height: 8rem;
+  }
+
+  & td img {
+    width: 100%;
+  }
+
+  & .cart-item-count {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+
+    & button {
+      height: 100%;
+    }
+  }
+
+  & .not-found {
+    width: 100%;
+    text-align: left;
+  }
+
+  & .shopping-buy-message {
+    font-size: 2rem;
+    color: var(--color-text-error);
   }
 }
 </style>

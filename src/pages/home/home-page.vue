@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import { PageHeading } from '~~/src/shared/ui/page-heading'
+import { Carousel } from '@ark-ui/vue/carousel'
+import { useServicesModel } from '~~/src/shared/model/services'
+import { ArrowRight, ArrowLeft } from 'lucide-vue-next'
+
+const servicesModel = useServicesModel()
+const images = computed(() => servicesModel.services)
+const imageIndex = ref(0)
 
 const mockBreadcrumbs = [
   {
@@ -131,6 +138,47 @@ const mission = [
         </tbody>
       </table>
     </section>
+    <section class="carousel">
+      <h3 class="text-subheading">
+        Наши услуги
+      </h3>
+
+      <Carousel.Root
+        v-if="servicesModel.status === 'success'"
+        v-model:index="imageIndex"
+        class="carousel-root"
+      >
+        <Carousel.Control>
+          <Carousel.PrevTrigger> <ArrowLeft /> </Carousel.PrevTrigger>
+          <Carousel.NextTrigger> <ArrowRight /> </Carousel.NextTrigger>
+        </Carousel.Control>
+
+        <Carousel.Viewport>
+          <Carousel.ItemGroup>
+            <Carousel.Item
+              v-for="(image, idx) in images"
+              :key="idx"
+              :index="idx"
+            >
+              <NuxtLink :to="`/catalog/${image.id}`">
+                <img
+                  :alt="image.title"
+                  :src="image.image"
+                >
+                <div class="text">
+                  <h6 class="text-heading">
+                    {{ image.title }}
+                  </h6>
+                  <p class="text-subheading">
+                    {{ image.description }}
+                  </p>
+                </div>
+              </NuxtLink>
+            </Carousel.Item>
+          </Carousel.ItemGroup>
+        </Carousel.Viewport>
+      </Carousel.Root>
+    </section>
   </div>
 </template>
 
@@ -200,7 +248,6 @@ const mission = [
 
 .mission {
   margin-block-start: 8rem;
-  margin-block-end: 4.5rem;
 }
 
 .mission-items tbody {
@@ -219,6 +266,59 @@ const mission = [
 
   & th {
     text-align: start;
+  }
+}
+
+.carousel {
+  margin-block-start: 8rem;
+  margin-block-end: 6rem;
+
+  & [data-part="root"] {
+    margin-block-start: 5rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  & [data-part="control"] {
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+  }
+
+  & [data-part*="trigger"] {
+    height: 8rem;
+    width: 8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--color-background);
+    transition: color var(--transition-duration) ease;
+
+    &:not([disabled]):hover {
+      color: var(--color-accent);
+    }
+
+  }
+
+  & [data-part="item"] {
+    & a:hover {
+      color: var(--color-text);
+    }
+
+    & img {
+      width: 100%;
+      max-height: 80dvh;
+    }
+
+    & .text {
+      position: absolute;
+      inset-block-start: 8rem;
+      inset-inline-start: 8rem;
+      display: flex;
+      flex-direction: column;
+      row-gap: 2rem;
+    }
   }
 }
 </style>

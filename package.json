@@ -18,6 +18,7 @@
     "db:seed": "bun ./server/db/seed.ts"
   },
   "dependencies": {
+    "@ark-ui/vue": "^4.4.1",
     "@libsql/client": "^0.14.0",
     "@nuxt/eslint": "^0.6.0",
     "@nuxt/fonts": "^0.10.1",

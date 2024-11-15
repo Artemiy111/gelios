@@ -45,8 +45,9 @@ export const services = sqliteTable('services', {
   section: text('section', { enum: serviceSections }).notNull(),
   title: text('title').notNull(),
   description: text('description').notNull(),
-  image: text('image'),
-  price: int(),
+  image: text('image').notNull(),
+  price: int().notNull(),
+  priceDiscount: int(),
 })
 
 export const servicesRelations = relations(services, () => ({}))
@@ -59,6 +60,17 @@ export const feedbacks = sqliteTable('feedbacks', {
   userId: int('user_id').notNull(),
   comment: text('comment').notNull(),
 })
+
+export const orders = sqliteTable('orders', {
+  id: int('id').primaryKey({ autoIncrement: true }),
+  userId: int('user_id').notNull(),
+  serviceId: int('service_id').notNull(),
+  count: int('count').notNull(),
+  createdAt: int('created_at').notNull().$defaultFn(() => Date.now()),
+})
+
+export type OrderDb = typeof orders.$inferSelect
+export type OrderDbCreate = typeof orders.$inferInsert
 
 export const feedbacksRelations = relations(feedbacks, ({ one }) => ({
   user: one(users, {
