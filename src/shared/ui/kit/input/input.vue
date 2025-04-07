@@ -22,12 +22,12 @@ const model = defineModel<Model>()
 input {
   width: 100%;
   padding: 1rem 2.2rem;
+  border: none;
 
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
 
   background: var(--color-foreground);
-  border: none;
 
 }
 ::placeholder {

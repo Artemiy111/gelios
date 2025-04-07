@@ -76,10 +76,10 @@ const breadcrumbs = computed<BreadCrumb[]>(() => [
 
 <style scoped>
 .service {
-  margin-block-start: 4.5rem;
   display: grid;
   grid-template-columns: 1fr 40rem;
   column-gap: 4rem;
+  margin-block-start: 4.5rem;
 }
 
 .service-image {
@@ -88,8 +88,8 @@ const breadcrumbs = computed<BreadCrumb[]>(() => [
 }
 
 .service-buttons {
-  margin-block-start: 3rem;
   display: flex;
   column-gap: 2rem;
+  margin-block-start: 3rem;
 }
 </style>

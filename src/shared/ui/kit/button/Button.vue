@@ -29,8 +29,10 @@ const props = withDefaults(defineProps<{
 button {
   height: fit-content;
   padding: 1rem 2.2rem;
-  background: var(--is-primary, var(--color-text-base)) var(--is-secondary, var(--color-foreground));
   border: none;
+
+  background: var(--is-primary, var(--color-text-base)) var(--is-secondary, var(--color-foreground));
+
   transition: color 0.3s, background 0.3s;
 
   &[disabled] {

@@ -1,15 +1,16 @@
-import { db } from '~~/server/db'
-import { type UserDbCreate, services, type ServiceDbCreate } from '~~/server/db/schema'
+import { db } from '.'
+import { type UserDbCreate, services, type ServiceDbCreate, users } from './schema'
 import { Argon2id } from 'oslo/password'
+import { readFileSync } from 'node:fs'
 
-import Image1 from '~~/public/images/base64/1.txt'
-import Image2 from '~~/public/images/base64/2.txt'
-import Image3 from '~~/public/images/base64/3.txt'
-import Image4 from '~~/public/images/base64/4.txt'
-import Image5 from '~~/public/images/base64/5.txt'
-import Image6 from '~~/public/images/base64/6.txt'
+const Image1 = readFileSync('./public/images/base64/1.txt').toString()
+const Image2 = readFileSync('./public/images/base64/2.txt').toString()
+const Image3 = readFileSync('./public/images/base64/3.txt').toString()
+const Image4 = readFileSync('./public/images/base64/4.txt').toString()
+const Image5 = readFileSync('./public/images/base64/5.txt').toString()
+const Image6 = readFileSync('./public/images/base64/6.txt').toString()
 
-const imgPath = (img: string) => `data:image/png;base64,${img}`
+const imgPath = (img: string) => `${img}`
 
 const seedServices: ServiceDbCreate[] = [
   {
@@ -56,7 +57,7 @@ const seedServices: ServiceDbCreate[] = [
   },
 ]
 
-const users: UserDbCreate[] = [
+const seedUsers: UserDbCreate[] = [
   {
     email: 'art@art.art',
     firstName: 'Артемий',
@@ -76,8 +77,8 @@ const seed = async () => {
   console.log('seeding...')
   await db.delete(services)
   await db.insert(services).values(seedServices)
-  // await db.delete(users)
-  // await db.insert(users).values(seedUsers)
+  await db.delete(users)
+  await db.insert(users).values(seedUsers)
 
   console.log('seeded!')
 }

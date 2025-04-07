@@ -274,25 +274,28 @@ const mission = [
   margin-block-end: 6rem;
 
   & [data-part="root"] {
-    margin-block-start: 5rem;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
+    margin-block-start: 5rem;
   }
 
   & [data-part="control"] {
     position: absolute;
-    bottom: 0;
     z-index: 1;
+    bottom: 0;
     display: flex;
   }
 
   & [data-part*="trigger"] {
-    height: 8rem;
-    width: 8rem;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
+    width: 8rem;
+    height: 8rem;
+
     background: var(--color-background);
+
     transition: color var(--transition-duration) ease;
 
     &:not([disabled]):hover {
@@ -315,6 +318,7 @@ const mission = [
       position: absolute;
       inset-block-start: 8rem;
       inset-inline-start: 8rem;
+
       display: flex;
       flex-direction: column;
       row-gap: 2rem;

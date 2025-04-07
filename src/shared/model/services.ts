@@ -39,7 +39,7 @@ export const useServicesModel = defineStore('services', () => {
       const filteredServices = section.services.filter((service) => {
         const servicePassFilter
           = service.title.toLowerCase().includes(filter.value.toLowerCase())
-          || service.description.toLowerCase().includes(filter.value.toLowerCase())
+            || service.description.toLowerCase().includes(filter.value.toLowerCase())
         return servicePassFilter
       })
 

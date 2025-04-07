@@ -156,10 +156,12 @@ watchImmediate(() => props.search, () => {
 }
 
 .section-skeleton-title {
+  width: 30%;
   height: var(--text-subheading);
   margin-block: calc((var(--text-subheading) * var(--text-subheading-line-height) - var(--text-subheading)) / 2);
-  width: 30%;
+
   background: var(--color-foreground);
+
   animation: skeleton-pulse var(--_duration) infinite ease-in-out alternate;
 }
 
@@ -171,18 +173,22 @@ watchImmediate(() => props.search, () => {
 }
 
 .service-skeleton-title {
+  width: 50%;
   height: var(--text-base);
   margin-block: calc(var(--text-base) * var(--text-base-line-height) - var(--text-base));
-  width: 50%;
+
   background: var(--color-foreground);
+
   animation: skeleton-pulse var(--_duration) infinite ease-in-out alternate;
 }
 
 .service-skeleton-description {
+  width: 100%;
   height: var(--text-base);
   margin-block: calc(var(--text-base) * var(--text-base-line-height) - var(--text-base));
-  width: 100%;
+
   background: var(--color-foreground);
+
   animation: skeleton-pulse var(--_duration) infinite ease-in-out alternate;
 }
 </style>

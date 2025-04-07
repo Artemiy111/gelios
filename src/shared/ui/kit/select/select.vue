@@ -82,13 +82,13 @@ button {
 
   width: 100%;
   padding: 1rem 2.2rem;
+  border: none;
 
   font-size: var(--text-base);
   line-height: var(--text-base-line-height);
   text-align: start;
 
   background: var(--color-foreground);
-  border: none;
 
   anchor-name: --select;
 
@@ -115,10 +115,10 @@ span.placeholder {
 
   padding-block: 2rem;
   padding-inline: 3rem;
+  border: 1px solid var(--color-separator);
 
   opacity: 0;
   background: var(--color-background);
-  border: 1px solid var(--color-separator);
 
   transition: opacity var(--transition-duration);
 

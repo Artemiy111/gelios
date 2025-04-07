@@ -111,11 +111,11 @@
     
     width: max-content;
     height: max-content;
+    border: none;
 
     line-height: var(--text-base-line-height);
 
     background: transparent;
-    border: none;
   }
 
   a {

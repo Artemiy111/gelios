@@ -350,9 +350,10 @@ const shoppingCartModel = useShoppingCartModel()
 .search-menu-dialog {
   inset: 0;
 
+  border: none;
+
   opacity: 0;
   background: none;
-  border: none;
 
   transition: opacity 0.3s;
 
@@ -408,8 +409,9 @@ const shoppingCartModel = useShoppingCartModel()
 .burger-menu-dialog {
   inset: 0;
 
-  background: none;
   border: none;
+
+  background: none;
 
   transition: all 0.3s;
 
@@ -488,9 +490,9 @@ const shoppingCartModel = useShoppingCartModel()
 
   padding-block: var(--_pad-block);
   padding-inline: var(--_pad-inline);
+  border: 1px solid var(--color-separator);
 
   opacity: 0;
-  border: 1px solid var(--color-separator);
 
   transition: all 0.3s;
 
@@ -547,16 +549,18 @@ const shoppingCartModel = useShoppingCartModel()
   }
 
   & [popover] {
-    position-anchor: --user-settings;
-    position-area: bottom;
-    border: 1px solid var(--color-separator);
     padding-block: 3rem;
     padding-inline: 3rem;
+    border: 1px solid var(--color-separator);
 
-    transition: all var(--transition-duration);
-    transition-behavior: allow-discrete;
     opacity: 0;
     background: var(--color-background);
+
+    transition: all var(--transition-duration);
+
+    position-anchor: --user-settings;
+    position-area: bottom;
+    transition-behavior: allow-discrete;
 
     &:popover-open {
       opacity: 1;
@@ -573,17 +577,18 @@ const shoppingCartModel = useShoppingCartModel()
 }
 
 .shopping-popover {
+  padding-block: 3rem;
+  padding-inline: 3rem;
+  border: 1px solid var(--color-separator);
+
+  opacity: 0;
+  background: var(--color-background);
+
+  transition: all var(--transition-duration);
 
   position-anchor: --shopping;
   position-area: span-left bottom;
-  border: 1px solid var(--color-separator);
-
-  padding-block: 3rem;
-  padding-inline: 3rem;
-  transition: all var(--transition-duration);
   transition-behavior: allow-discrete;
-  background: var(--color-background);
-  opacity: 0;
 
   &:popover-open {
     opacity: 1;
@@ -612,8 +617,10 @@ const shoppingCartModel = useShoppingCartModel()
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
     align-items: center;
-    text-align: left;
+
     height: 8rem;
+
+    text-align: left;
   }
 
   & td img {

@@ -29,11 +29,11 @@ const props = withDefaults(defineProps<{
 
   height: fit-content;
   padding: 1rem 2.2rem;
+  border: none;
 
   color: var(--is-primary, var(--color-background)) var(--is-secondary, var(--color-text-base));
 
   background: var(--is-primary, var(--color-text-base)) var(--is-secondary, var(--color-foreground));
-  border: none;
 
   transition: color 0.3s, background 0.3s;
 

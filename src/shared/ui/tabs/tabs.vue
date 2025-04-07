@@ -37,7 +37,6 @@ const currentTab = defineModel<string>('tab', { required: true })
   align-items: start;
 
   margin-block-start: 4rem;
-
   border-block-end: 1px solid var(--color-separator);
 }
 
