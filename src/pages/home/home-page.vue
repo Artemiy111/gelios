@@ -147,36 +147,35 @@ const mission = [
         v-if="servicesModel.status === 'success'"
         v-model:index="imageIndex"
         class="carousel-root"
+        :slide-count="images.length"
       >
         <Carousel.Control>
           <Carousel.PrevTrigger> <ArrowLeft /> </Carousel.PrevTrigger>
           <Carousel.NextTrigger> <ArrowRight /> </Carousel.NextTrigger>
         </Carousel.Control>
 
-        <Carousel.Viewport>
-          <Carousel.ItemGroup>
-            <Carousel.Item
-              v-for="(image, idx) in images"
-              :key="idx"
-              :index="idx"
-            >
-              <NuxtLink :to="`/catalog/${image.id}`">
-                <img
-                  :alt="image.title"
-                  :src="image.image"
-                >
-                <div class="text">
-                  <h6 class="text-heading">
-                    {{ image.title }}
-                  </h6>
-                  <p class="text-subheading">
-                    {{ image.description }}
-                  </p>
-                </div>
-              </NuxtLink>
-            </Carousel.Item>
-          </Carousel.ItemGroup>
-        </Carousel.Viewport>
+        <Carousel.ItemGroup>
+          <Carousel.Item
+            v-for="(image, idx) in images"
+            :key="idx"
+            :index="idx"
+          >
+            <NuxtLink :to="`/catalog/${image.id}`">
+              <img
+                :alt="image.title"
+                :src="image.image"
+              >
+              <div class="text">
+                <h6 class="text-heading">
+                  {{ image.title }}
+                </h6>
+                <p class="text-subheading">
+                  {{ image.description }}
+                </p>
+              </div>
+            </NuxtLink>
+          </Carousel.Item>
+        </Carousel.ItemGroup>
       </Carousel.Root>
     </section>
   </div>
@@ -305,6 +304,8 @@ const mission = [
   }
 
   & [data-part="item"] {
+    position: relative;
+
     & a:hover {
       color: var(--color-text);
     }
