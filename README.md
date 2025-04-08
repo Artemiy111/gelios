@@ -18,5 +18,8 @@
 ## Запуск
 
 ```bash
+  bun install
+  bun run db:push
+  bun run db:seed
   docker-compose --env-file .env up --build
 ```
