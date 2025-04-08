@@ -1,7 +1,7 @@
 services:
   nuxt1:
     build: .
-    command: bun run serve:local
+    command: npm run serve:local
     environment:
       - NITRO_PORT=3000
     expose:
@@ -11,7 +11,7 @@ services:
 
   nuxt2:
     build: .
-    command: bun run serve:local
+    command: npm run serve:local
     environment:
       - NITRO_PORT=3001
     expose:
@@ -21,7 +21,7 @@ services:
 
   nuxt3:
     build: .
-    command: bun run serve:local
+    command: npm run serve:local
     environment:
       - NITRO_PORT=3002
     expose:

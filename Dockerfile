@@ -1,15 +1,23 @@
-FROM oven/bun:latest
+FROM oven/bun:latest AS builder
 
 WORKDIR /app
 
 COPY package.json .
 COPY bun.lock .
-RUN bun install
+RUN bun install --frozen-lockfile 
 
 COPY . .
 RUN bun run build
 
+FROM node:22-alpine
+
+WORKDIR /app
+
+# COPY --from=builder /app/node_modules ./node_modules
+# COPY --from=builder /app/.output ./output
+COPY --from=builder /app .
+# COPY --from=builder /app/package.json ./
+
 EXPOSE 3000 3001 3002
 
-# Команда переопределяется в docker-compose.yml
-CMD ["bun", "run", "serve:local"] 
+CMD ["npm", "run", "serve:local"]
