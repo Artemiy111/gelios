@@ -17,6 +17,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.output ./.output
 
 ENV NODE_ENV=production
-EXPOSE 3000-3002
+EXPOSE 3000
 
 CMD ["npm", "run", "serve:local"]

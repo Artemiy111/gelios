@@ -1,38 +1,28 @@
 services:
-  nuxt1:
+  nuxt:
     build: .
-    environment:
-      - NITRO_PORT=3000
-    expose:
+    ports:
       - "3000"
+    networks:
+      - app_network
     env_file:
       - .env
+    deploy:
+      replicas: 3
+    restart: unless-stopped
 
-  nuxt2:
-    build: .
-    environment:
-      - NITRO_PORT=3001
-    expose:
-      - "3001"
-    env_file:
-      - .env
-
-  nuxt3:
-    build: .
-    environment:
-      - NITRO_PORT=3002
-    expose:
-      - "3002"
-    env_file:
-      - .env
-      
   nginx:
     image: nginx:alpine
     ports:
       - "80:80"
+    networks:
+      - app_network
     volumes:
-      - ./.nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
-      - nuxt1
-      - nuxt2
-      - nuxt3
+      - nuxt
+    restart: unless-stopped
+
+networks:
+  app_network:  
+    driver: bridge
