@@ -14,7 +14,6 @@
 - Feature Sliced Design
 - Балансировка нагрузки с помощью `nginx`
 
-
 ## Запуск
 
 ```bash
