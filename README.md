@@ -1,5 +1,7 @@
 # Редизайн сайта страховой компании "Гелиос"
 
+<img width="2549" height="1214" alt="image" src="https://github.com/user-attachments/assets/d0c208c1-2996-4890-9da6-a417f6855dee" />
+
 - Дизайн в Фигме
 - Новейшие подходы к вёрстке
   - Дизайн токены через css variables
