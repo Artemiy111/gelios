@@ -18,6 +18,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-11-18',
 
   nitro: {
+    preset: 'bun',
+
     experimental: {
       openAPI: true,
     },

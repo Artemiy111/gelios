@@ -10,6 +10,8 @@ services:
     deploy:
       replicas: 3
     restart: unless-stopped
+    security_opt:
+      - label=disable
 
   nginx:
     image: nginx:alpine

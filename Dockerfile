@@ -8,7 +8,7 @@ RUN bun install --frozen-lockfile --production --no-cache
 COPY . .
 RUN bun run build
 
-FROM node:23-alpine
+FROM oven/bun:alpine
 
 WORKDIR /app
 
@@ -19,4 +19,4 @@ COPY --from=builder /app/.output ./.output
 ENV NODE_ENV=production
 EXPOSE 3000
 
-CMD ["npm", "run", "serve:local"]
+CMD ["bun", "run", "serve:local"]

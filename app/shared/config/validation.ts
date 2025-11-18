@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v3'
 
 const formatter = new Intl.DateTimeFormat('ru-RU', { dateStyle: 'short' })
 
@@ -19,8 +19,8 @@ export const validationErrors = {
 const requiredStringSchema = z.string({ message: validationErrors.required })
 const requiredNumberSchema = z.number({ message: validationErrors.required })
 
-const getMinMaxStringSchema = (min: number, max: number) => requiredStringSchema.min(min, validationErrors.minLength(min)).max(max, validationErrors.maxLength(max))
-const getMinMaxNumberSchema = (min: number, max: number) => requiredNumberSchema.min(min, validationErrors.minValue(min)).max(max, validationErrors.maxValue(max))
+export const getMinMaxStringSchema = (min: number, max: number) => requiredStringSchema.min(min, validationErrors.minLength(min)).max(max, validationErrors.maxLength(max))
+export const getMinMaxNumberSchema = (min: number, max: number) => requiredNumberSchema.min(min, validationErrors.minValue(min)).max(max, validationErrors.maxValue(max))
 
 const passwordSchema = getMinMaxStringSchema(8, 20)
 const emailSchema = requiredStringSchema.email(validationErrors.email)
