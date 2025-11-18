@@ -1,4 +1,4 @@
-import { registerSchema } from '~~/src/shared/config/validation'
+import { registerSchema } from '~/shared/config/validation'
 import { Argon2id } from 'oslo/password'
 import { userRepo } from '~~/server/repos/user'
 import { userMapper } from '~~/server/mappers/user'

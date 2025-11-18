@@ -10,11 +10,12 @@ export default defineNuxtConfig({
 
   app: { head: { htmlAttrs: { lang: 'ru' } } },
 
-  future: {
-    compatibilityVersion: 4,
+  dir: {
+    pages: '_routes',
+    middleware: '_middleware',
   },
 
-  compatibilityDate: '2024-04-03',
+  compatibilityDate: '2025-11-18',
 
   nitro: {
     experimental: {

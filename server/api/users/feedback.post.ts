@@ -1,6 +1,6 @@
 import { authRepo } from '~~/server/repos/auth'
 import { userRepo } from '~~/server/repos/user'
-import { feedbackSchema } from '~~/src/shared/config/validation'
+import { feedbackSchema } from '~/shared/config/validation'
 
 defineRouteMeta({
   openAPI: {

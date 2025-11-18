@@ -1,7 +1,7 @@
 import { Argon2id } from 'oslo/password'
 import { userMapper } from '~~/server/mappers/user'
 import { userRepo } from '~~/server/repos/user'
-import { loginSchema } from '~~/src/shared/config/validation'
+import { loginSchema } from '~/shared/config/validation'
 
 export default defineEventHandler(async (event) => {
   const body = await readValidatedBody(event, loginSchema.parse)

@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm'
 import { sqliteTable, int, text } from 'drizzle-orm/sqlite-core'
-import { documentTypes } from '../../src/shared/config/validation'
+import { documentTypes } from '../../app/shared/config/validation'
 
 export const users = sqliteTable('users', {
   id: int('id').primaryKey({ autoIncrement: true }),
